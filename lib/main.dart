@@ -26,7 +26,7 @@ void main() async
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-       initialRoute:Splash_Screen.scid ,
+       initialRoute: Splash_Screen.scid,
        routes: {
          Splash_Screen.scid:(context)=>Splash_Screen(),
          Login_Screen.scid:(context)=> Login_Screen(),

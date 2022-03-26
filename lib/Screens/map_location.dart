@@ -39,11 +39,13 @@ class _Loc_ScreenState extends State<Loc_Screen> {
             FutureBuilder(
               future: Provider.of<Prov_loc>(context,listen: false). getCurrentLocation(),
               builder:(context,snapshot)=>snapshot.hasData?
-              GoogleMap(
-                markers:Provider.of<Prov_loc>(context,listen: false).markers.values.toSet(),
-                onMapCreated: Provider.of<Prov_loc>(context,listen: false).onMapCreated,
-                initialCameraPosition:
-                CameraPosition(target:Provider.of<Prov_loc>(context,listen: false).currentLatLng, zoom: 15.0),
+              Consumer<Prov_loc>(
+                builder:(ctx,pr,ch)=> GoogleMap(
+                  markers:pr.markers.values.toSet(),
+                  onMapCreated: Provider.of<Prov_loc>(context,listen: false).onMapCreated,
+                  initialCameraPosition:
+                  CameraPosition(target:Provider.of<Prov_loc>(context,listen: false).currentLatLng, zoom: 15.0),
+                ),
               ):Container(
                   height: height,
                   width: width,
@@ -123,9 +125,9 @@ class _Loc_ScreenState extends State<Loc_Screen> {
                     ),
                   ),
                   onPressed: (){
-                    setState(() {
-                      mylocationnavigate();
-                    });
+
+                      Provider.of<Prov_loc>(context,listen: false).mylocationnavigate();
+
                   },
                 )
             ),
@@ -179,21 +181,7 @@ class _Loc_ScreenState extends State<Loc_Screen> {
   }
 
 
-  mylocationnavigate()async{
-    Provider.of<Prov_loc>(context,listen: false).mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target:Provider.of<Prov_loc>(context,listen: false).currentLatLng, zoom: 15, ),));
-    final marker = Marker(
-      markerId: MarkerId('myposition'),
-      position:Provider.of<Prov_loc>(context,listen: false).currentLatLng,
 
-      // icon: BitmapDescriptor.,
-      infoWindow: InfoWindow(
-        title: 'title',
-
-      ),
-    );
-    Provider.of<Prov_loc>(context,listen: false).markers[MarkerId('myposition')] = marker;
-
-  }
 
 
 }

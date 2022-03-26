@@ -8,6 +8,13 @@ class Prov_loc with ChangeNotifier
   late LatLng  currentLatLng;
   late GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+
+  late List<Placemark> placemarks;
+  late Placemark placeMark;
+  late String cityname;
+  late String countryname;
+  late String address;
+  late String locality;
   Future<Position> getCurrentLocation() async
   {
     var current_positin = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -18,15 +25,34 @@ class Prov_loc with ChangeNotifier
       mapController = controller;
     notifyListeners();
   }
+  mylocationnavigate()async{
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target:currentLatLng, zoom: 15, ),));
+    await getPlace(currentLatLng.latitude,currentLatLng.longitude);
+
+    final marker = Marker(
+      markerId: MarkerId('myposition'),
+      position:currentLatLng,
+
+      // icon: BitmapDescriptor.,
+      infoWindow: InfoWindow(
+        title: address,
+
+      ),
+    );
+   markers[MarkerId('myposition')] = marker;
+   notifyListeners();
+
+  }
   searchnavigate(String searchAdd) async {
 
-    locationFromAddress(searchAdd).then((result) {
+    locationFromAddress(searchAdd).then((result) async {
+      await getPlace(result[0].latitude, result[0].longitude);
       final marker = Marker(
         markerId: MarkerId('place_name'),
         position: LatLng(result[0].latitude, result[0].longitude),
         // icon: BitmapDescriptor.,
         infoWindow: InfoWindow(
-          title: 'title',
+          title: address,
 
         ),
       );
@@ -40,4 +66,16 @@ class Prov_loc with ChangeNotifier
     });
     notifyListeners();
   }
+  Future<void> getPlace(double lat,double lang)  async {
+    placemarks = await placemarkFromCoordinates(lat, lang);
+
+    // this is all you need
+    Placemark placeMark  = placemarks[0];
+     cityname = placeMark.name!;
+     countryname= placeMark.country!;
+    locality = placeMark.locality!;
+     address = "${locality},${cityname},${countryname}";
+     notifyListeners();
+  }
+
 }

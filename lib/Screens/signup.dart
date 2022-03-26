@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../providers/Prov_login_signup.dart';
+import '../widgets/Textformfield.dart';
 import '../widgets/material_button.dart';
 import 'map_location.dart';
 class Signup_Screen extends StatefulWidget {
@@ -21,36 +22,13 @@ class _Signup_ScreenState extends State<Signup_Screen> {
   final  TextEditingController ? _pass=TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var pr=Provider.of<Login_signup_prov>(context,listen: false);
     var size=MediaQuery.of(context).size;
     var height=size.height;
     var width=size.width;
-    String ? usermsg="";
-    String ? passmsg="";
 
-    void validateuser(String value) {
-      if ( value.isEmpty) {
-        setState(() {
-          usermsg =" you must enter user name";
-        });
-      }
-      else{
-        setState(() {
-          usermsg='';
-        });
-      }
-    }
-    void validatepassword(String value) {
-      if ( value.isEmpty) {
-        setState(() {
-          usermsg =" you must enter user name";
-        });
-      }
-      else{
-        setState(() {
-          usermsg='';
-        });
-      }
-    }
+
+
     return SafeArea(
       child: Scaffold(
 
@@ -67,7 +45,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                       fit:BoxFit.cover
                   ),
                 ),
-                height: height/4,
+                height: height/7,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -90,24 +68,38 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                     Opacity(
                       opacity: .8,
 
-                      child: txtformfield(controller: _name, width: width, height: height, hinttext: 'الرجاء ادخال الاسم بالكامل',
-                          icondata: null),
+                      child: Consumer<Login_signup_prov>(
+                        builder:(ctx,prov,ch)=> txtformfield(controller: _name, width: width, height: height, hinttext: 'الرجاء ادخال الاسم بالكامل',
+                            icondata: null,inputtype: TextInputType.name,
+                        errortext: prov.sunamemsg,
+
+                        ),
+                      ),
 
                     ),
                     txt(text: "العمر",),
                     Opacity(
                       opacity: .8,
 
-                      child: txtformfield(controller: _age, width: width, height: height, hinttext: 'الرجاء ادخال العمر',
-                          icondata: null),
+                      child: Consumer<Login_signup_prov>(
+                        builder:(ctx,pro,ch)=> txtformfield(controller: _age, width: width, height: height, hinttext: 'الرجاء ادخال العمر',
+                            icondata: null,inputtype: TextInputType.number,
+                          errortext: pro.sunagemsg,
+                        ),
+                      ),
 
                     ),
                     txt(text: "البريد الالكترونى",),
                     Opacity(
                       opacity: .8,
 
-                      child: txtformfield(controller: _user, width: width, height: height, hinttext: 'الرجاء ادخال البريد الالكترونى / رقم الهاتف',
-                          icondata: Icons.person),
+                      child: Consumer<Login_signup_prov>(
+                        builder:(ctx,pro,ch)=> txtformfield(controller: _user, width: width, height: height, hinttext: 'الرجاء ادخال البريد الالكترونى / رقم الهاتف',
+                            icondata: Icons.person,inputtype: TextInputType.emailAddress,
+                        errortext: pro.suemailmsg,
+
+                        ),
+                      ),
 
                     ),
 
@@ -129,6 +121,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                                 color: Color.fromRGBO(204, 88, 76, 1)
                             ),
                             decoration: InputDecoration(
+                              errorText: pr.supassmsg,
                               prefixIcon: IconButton(onPressed: () {
                                 prov.changeshow(prov.showdata);
                               }, icon:prov.showdata==true? Icon(Icons.visibility_off_sharp):Icon(Icons.visibility_sharp),
@@ -192,7 +185,9 @@ class _Signup_ScreenState extends State<Signup_Screen> {
 
                             builder:(context,prov,ch)=> GestureDetector(
                               onTap: (){
-                              prov.changeusertype("learner");
+
+                                    prov.changeusertype("learner");
+
                               },
                               child: Card(
                                 child: Container(
@@ -220,10 +215,22 @@ class _Signup_ScreenState extends State<Signup_Screen> {
 
               SizedBox(height: height/50,),
 
+              /*-----------------------------------------------------------------*/
+
+
               Mbutton(width: width, height: height,
 
-                  func: (){
-                Navigator.of(context).pushNamed(Loc_Screen.scid);
+                  func: ()async{
+                   await pr.validateuser(_name!.text, _age!.text, _user!.text, _pass!.text);
+                if(pr.sunamemsg==""&&pr.sunagemsg==""&&pr.suemailmsg==""&&pr.supassmsg=="" && pr.usertype!="")
+                  {
+                    Navigator.of(context).pushNamed(Loc_Screen.scid);
+                  }
+                else if(pr.usertype=="")
+                  {
+                    
+                  }
+
                   }
                   ,colors: [
                 Color.fromRGBO(59, 199, 221, 1.0),
@@ -289,59 +296,6 @@ final String? text;
           fontWeight: FontWeight.w600
       )
       ),
-    );
-  }
-}
-
-class txtformfield extends StatelessWidget {
-    txtformfield(
-    {
-      required this.controller,
-      required this.width,
-      required this.height,
-      required this.hinttext,
-      required this.icondata,
-    }
-    );
-  final TextEditingController? controller;
-  final double? width;
-  final double? height;
-  final String? hinttext;
-  final IconData? icondata;
-
-
-
-
-    @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.right,
-      validator: (val)=>val!.isEmpty?"user cant be blank":null,
-      controller: controller,
-      keyboardType: TextInputType.emailAddress,
-      textAlignVertical: TextAlignVertical.top,
-      obscureText: false,
-      style: TextStyle(
-          color: Color.fromRGBO(204, 88, 76, 1)
-      ),
-      decoration: InputDecoration(
-
-        prefixIcon: Icon(icondata),
-        hintText: hinttext,
-        hintStyle: TextStyle(
-            fontSize: 12,
-            color: Color.fromRGBO(204, 88, 76, 1)
-
-        ),
-
-        contentPadding: EdgeInsets.only(
-            right: width!/60
-
-        ),
-      ),
-
-
     );
   }
 }
