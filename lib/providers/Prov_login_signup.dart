@@ -6,6 +6,10 @@ class Login_signup_prov with ChangeNotifier{
   String sunagemsg="";
   String suemailmsg="";
   String supassmsg="";
+  String suname="";
+  String sunage="";
+  String suemail="";
+  String supass="";
   void changeusertype(String type)
   {
     usertype=type;
@@ -32,6 +36,8 @@ class Login_signup_prov with ChangeNotifier{
     }
     else{
       sunamemsg="";
+      suname=name;
+
     }
     notifyListeners();
   }
@@ -39,9 +45,11 @@ class Login_signup_prov with ChangeNotifier{
     if(age.isEmpty)
     {
       sunagemsg =" يجب ادخال العمر";
+
     }
     else{
       sunagemsg ="";
+      sunage=age;
     }
     notifyListeners();
   }
@@ -53,6 +61,7 @@ class Login_signup_prov with ChangeNotifier{
     else
       {
         suemailmsg="";
+        suemail=email;
       }
     notifyListeners();
   }
@@ -64,6 +73,7 @@ class Login_signup_prov with ChangeNotifier{
     else
       {
         supassmsg="";
+        supass=pass;
       }
     notifyListeners();
   }

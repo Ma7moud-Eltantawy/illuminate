@@ -1,16 +1,20 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:illuminate/Screens/Intro.dart';
+import 'package:illuminate/Screens/Listof_instructors.dart';
 import 'package:illuminate/Screens/Login.dart';
 import 'package:illuminate/Screens/Splash.dart';
 import 'package:illuminate/Screens/signup.dart';
 import 'package:illuminate/providers/Prov_location.dart';
 import 'package:illuminate/providers/Prov_login_signup.dart';
+import 'package:illuminate/widgets/drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 
-import 'Screens/Home_screen.dart';
+import 'Screens/instructor_home_screen.dart';
+import 'Screens/stu_home_screen.dart';
 import 'Screens/map_location.dart';
 void main() async
 {
@@ -34,6 +38,9 @@ void main() async
          Signup_Screen.scid:(context)=>Signup_Screen(),
          Loc_Screen.scid:(context)=>Loc_Screen(),
          Home_screen.scid:(context)=>  Home_screen(),
+         Instructor_list.scid:(context)=>  Instructor_list(),
+         Instrictor_home_screen.scid:(context)=>  Instrictor_home_screen(),
+
 
 
        },

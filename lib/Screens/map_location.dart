@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:illuminate/Screens/Home_screen.dart';
+import 'package:illuminate/Screens/stu_home_screen.dart';
 import 'package:illuminate/Screens/Login.dart';
 import 'package:illuminate/providers/Prov_location.dart';
+import 'package:illuminate/providers/Prov_login_signup.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+
+import 'instructor_home_screen.dart';
 class Loc_Screen extends StatefulWidget {
   static const scid="loc";
   const Loc_Screen({Key? key}) : super(key: key);
@@ -34,6 +37,7 @@ class _Loc_ScreenState extends State<Loc_Screen> {
     var width =size.width;
     return SafeArea(
       child: Scaffold(
+
         body: Stack(
           children: [
             FutureBuilder(
@@ -86,7 +90,7 @@ class _Loc_ScreenState extends State<Loc_Screen> {
                         ]),
                       )
                     ],
-                  ).show():Navigator.of(context).pushNamed(Home_screen.scid);
+                  ).show(): Provider.of<Login_signup_prov>(context,listen: false).usertype=="learner"?Navigator.of(context).pushNamed(Home_screen.scid):Navigator.of(context).pushNamed(Instrictor_home_screen.scid);
 
                 },
                 child: Card(
