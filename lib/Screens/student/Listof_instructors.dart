@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:illuminate/widgets/drawer.dart';
 import 'package:auto_animated/auto_animated.dart';
-import '../refrence.dart';
+import '../../refrence.dart';
 class Instructor_list extends StatefulWidget {
   static const scid="list_ins";
   const Instructor_list({Key? key}) : super(key: key);
@@ -13,25 +13,7 @@ class Instructor_list extends StatefulWidget {
 }
 
 class _Instructor_listState extends State<Instructor_list> {
-  final options = LiveOptions(
-    // Start animation after (default zero)
-    delay: Duration(seconds: 1),
 
-    // Show each item through (default 250)
-    showItemInterval: Duration(milliseconds: 500),
-
-    // Animation duration (default 250)
-    showItemDuration: Duration(seconds: 1),
-
-    // Animations starts at 0.05 visible
-    // item fraction in sight (default 0.025)
-    visibleFraction: 0.05,
-
-    // Repeat the animation of the appearance
-    // when scrolling in the opposite direction (default false)
-    // To get the effect as in a showcase for ListView, set true
-    reAnimateOnVisibility: false,
-  );
   // Build animated item (helper for all examples)
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override

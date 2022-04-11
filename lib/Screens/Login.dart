@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:illuminate/Screens/signup.dart';
+import 'package:illuminate/Screens/student/stu_home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../networks/get_data/users.dart';
 import '../providers/Prov_login_signup.dart';
 import '../widgets/material_button.dart';
+import '../widgets/myalert.dart';
 class Login_Screen extends StatefulWidget {
   static const scid="Login";
   const Login_Screen({Key? key}) : super(key: key);
@@ -205,7 +208,35 @@ class _Login_ScreenState extends State<Login_Screen> {
               SizedBox(height: height/50,),
 
               Mbutton(width: width, height: height,
-                  func: (){},
+                  func: ()async{
+                    await userlogin().getusersdata();
+                    try{
+                      userlogin().getuser(_user!.text);
+                      if(userauth!.email!.isNotEmpty)
+                        {
+                          Navigator.of(context).pushNamed(Home_screen.scid);
+                        }
+                      else{
+                        alertfunc(ctx: context, height: height, width: width, desc: "هناك خطأ فى البريد الالكترونى او كلمة المرور..", buttxt2: "انشاء حساب", but2:(){
+                          Navigator.of(context).pushNamed(Signup_Screen.scid);
+                        }, but1: (){
+                          Navigator.pop(context);
+                        });
+                      }
+                    }
+                    catch(e)
+                    {
+
+                       alertfunc(ctx: context, height: height, width: width, desc: "هناك خطأ فى البريد الالكترونى او كلمة المرور..", buttxt2: "انشاء حساب", but1:(){
+                         Navigator.of(context).pushNamed(Signup_Screen.scid);
+                       }, but2: (){
+                         Navigator.pop(context);
+                       });
+                    }
+
+
+
+                  },
 
                   colors: [
 

@@ -71,7 +71,9 @@ class _MydrawerState extends State<Mydrawer> {
                     ListTile(
                       title: item['title'],
                       leading: item['icon'],
-                      onTap: item['func'],
+                      onTap: (){
+                        item['func'](context);
+                      },
                     ),
                     Container(
                       height: height/1000,

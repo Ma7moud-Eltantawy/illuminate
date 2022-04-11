@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:illuminate/Screens/Login.dart';
+import 'package:illuminate/providers/Prov_profile.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -230,6 +231,12 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                   {
                     
                   }
+                var pro=Provider.of<Prov_profile_page>(context,listen: false);
+                pro.Username=_name!.text;
+                pro.email=_user!.text;
+                pro.Password=_pass!.text;
+                pro.Age=_age!.text;
+
 
                   }
                   ,colors: [

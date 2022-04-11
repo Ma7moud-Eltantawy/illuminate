@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:illuminate/Screens/stu_home_screen.dart';
+import 'package:illuminate/Screens/student/stu_home_screen.dart';
 import 'package:illuminate/Screens/Login.dart';
 import 'package:illuminate/providers/Prov_location.dart';
 import 'package:illuminate/providers/Prov_login_signup.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import 'instructor_home_screen.dart';
+import '../providers/Prov_profile.dart';
+import 'Instructor/instructor_home_screen.dart';
 class Loc_Screen extends StatefulWidget {
   static const scid="loc";
   const Loc_Screen({Key? key}) : super(key: key);
@@ -61,6 +62,8 @@ class _Loc_ScreenState extends State<Loc_Screen> {
               right: width/800,
               child: GestureDetector(
                 onTap: (){
+                  var pro=Provider.of<Prov_profile_page>(context,listen: false);
+                  pro.Address=  "${Provider.of<Prov_loc>(context,listen: false).address}";
                   Provider.of<Prov_loc>(context,listen: false).markers.isEmpty?
                   Alert(
                     context: context,

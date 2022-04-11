@@ -1,13 +1,18 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:illuminate/providers/Prov_profile.dart';
+import 'package:illuminate/widgets/Profile_Page.dart';
+import 'package:provider/provider.dart';
 
 List<Map<String,dynamic>> drawerlist=[
   {
     'title': Text('تعديل الملف الشخصى', textAlign: TextAlign.right,
       textDirection: TextDirection.rtl,),
     'icon':  Icon(Icons.person_outlined),
-    'func': () {},
+    'func': (BuildContext con) {
+      Navigator.of(con).pushNamed(Profile_data_Screen.scid);
+    },
   },
   {
     'title': Text('الاعدادات', textAlign: TextAlign.right,
@@ -80,10 +85,9 @@ List<Map<String,dynamic>> Instructorlist=[
     'age': '22',
     'address': 'المحله , غربيه',
   },
-
-
-
 ];
+
+
 
 
 
