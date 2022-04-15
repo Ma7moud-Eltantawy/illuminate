@@ -12,6 +12,7 @@ class _Bot_Nav_reqlistState extends State<Bot_Nav_reqlist> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Reqlist(),
     );
   }

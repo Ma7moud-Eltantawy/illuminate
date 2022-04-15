@@ -6,8 +6,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:illuminate/Screens/Instructor/Fav_posts.dart';
 import 'package:illuminate/Screens/Instructor/Home_page.dart';
+import 'package:illuminate/Screens/Instructor/List_of_students.dart';
 import 'package:illuminate/Screens/Instructor/requests_list.dart';
 import 'package:illuminate/Screens/Login.dart';
+import 'package:illuminate/providers/Prov_Theme_status.dart';
 import 'package:illuminate/providers/Prov_inst_home_page.dart';
 import 'package:illuminate/providers/Prov_login_signup.dart';
 import 'package:illuminate/widgets/drawer.dart';
@@ -29,6 +31,8 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
 
   @override
   Widget build(BuildContext context) {
+    var pro=Provider.of<Prov_theme_status>(context).active_switch;
+
     @override
     var size=MediaQuery.of(context).size;
     var height=size.height;
@@ -38,135 +42,144 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
       Ins_Home_Category(),
       Fav_List_Screen(),
       Bot_Nav_reqlist(),
-      Login_Screen(),
+      Stu_List_Screen(),
 
     ];
 
     var scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        elevation: 2,
-        backgroundColor: Colors.orange[100],
-        leading: Container(
-          margin: EdgeInsets.only(left: width/60),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color:Color.fromRGBO(204, 88, 76, 1),
-                    shape: BoxShape.circle
+        key: scaffoldKey,
+        appBar: AppBar(
+          elevation: 2,
+          backgroundColor:Theme.of(context).appBarTheme.backgroundColor,
+          leading: Container(
+            margin: EdgeInsets.only(left: width/60),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color:Color.fromRGBO(204, 88, 76, 1),
+                      shape: BoxShape.circle
+                  ),
+                  height: height/10,
+                  width: width/10.3,
+
                 ),
-                height: height/10,
-                width: width/10.3,
+                Container(
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage('assets/img/tantawy.jpg'),
+                  ),
+                  height: height/10.1,
+                  width: width/12.8,
 
-              ),
-              Container(
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/img/tantawy.jpg'),
                 ),
-                height: height/10.1,
-                width: width/12.8,
 
-              ),
-
-            ],
-          ),
-        ),
-        leadingWidth: width/10,
-        actions: <Widget>[
-          IconButton(
-            icon: Consumer<Prov_instructor_home>(
-              builder: (context,pr,ch)=>Badge(
-                badgeColor: Color.fromRGBO(204, 88, 76, 1),
-                badgeContent: Text(pr.Numreq().toString(),style: TextStyle(
-                  color: Colors.white
-                ),),
-                position: BadgePosition.topEnd(top: -18,end: -10),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Req_list.scid);
-                  },
-                  child: Container(
-                      height: height/25,
-                      width: width/12,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white
-                      ),
-
-                          child: Icon(Icons.group_add_outlined)),
-                ),
-              ),
+              ],
             ),
-            tooltip: 'Setting Icon',
-            color: Color.fromRGBO(204, 88, 76, 1),
-            onPressed: () {},
-          ), //Ic// onButton
-          IconButton(
-            icon: Container(
-                height: height/25,
-                width: width/12,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+          ),
+          leadingWidth: width/10,
+          actions: <Widget>[
+            IconButton(
+              icon: Consumer<Prov_instructor_home>(
+                builder: (context,pr,ch)=>Badge(
+                  badgeColor: Color.fromRGBO(204, 88, 76, 1),
+                  badgeContent: Text(pr.Numreq().toString(),style: TextStyle(
                     color: Colors.white
+                  ),),
+                  position: BadgePosition.topEnd(top: -18,end: -10),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pushNamed(Req_list.scid);
+                    },
+                    child: Container(
+                        height: height/25,
+                        width: width/12,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Theme.of(context).backgroundColor
+                        ),
+
+                            child: Icon(Icons.group_add_outlined)),
+                  ),
                 ),
-                child: Icon(Icons.menu)),
-            tooltip: 'Setting Icon',
-            color: Color.fromRGBO(204, 88, 76, 1),
-            onPressed:() => scaffoldKey.currentState!.openEndDrawer(),
-          ), //Ic
+              ),
+              tooltip: 'Setting Icon',
+              color: Color.fromRGBO(204, 88, 76, 1),
+              onPressed: () {},
+            ), //Ic// onButton
+            IconButton(
+              icon: Container(
+                  height: height/25,
+                  width: width/12,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color:Theme.of(context).backgroundColor
+                  ),
+                  child: Icon(Icons.menu)),
+              tooltip: 'Setting Icon',
+              color: Color.fromRGBO(204, 88, 76, 1),
+              onPressed:() => scaffoldKey.currentState!.openEndDrawer(),
+            ), //Ic
 
-        ], //<Widget>[]
-      ),
-      endDrawer: Mydrawer(),
-      
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add,color: Color.fromRGBO(204, 88, 76, 1),),
-        onPressed: () {  },
-        backgroundColor: Colors.orange[50],
-        //params
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: Consumer<Login_signup_prov>(
-        builder:(context,pr,ch)=> AnimatedBottomNavigationBar(
-          icons: [
-            Icons.home_outlined,
-            Icons.favorite_border,
-            Icons.contact_mail_outlined,
-            Icons.person_outline,
-          ],
-          activeColor: Color.fromRGBO(204, 88, 76, 1),
-
-          activeIndex: pr.activenum,
-          gapLocation: GapLocation.center,
-          notchSmoothness: NotchSmoothness.softEdge,
-          onTap:(index){
-            pr.chahnge_active(index);
-          },
-          //other params
+          ], //<Widget>[]
         ),
-      ),
-      body:Consumer<Prov_Check_connect>(
-        builder: (context,pr,ch)=>FutureBuilder(
-          future: pr.check_internet(),
-          builder: (context,snapshot)=> pr.net_connected==true?
-          Consumer<Login_signup_prov>(builder:(context,prov,ch)=>ins_screen_list[prov.activenum] ):Center(
-            child:Container(
-             decoration: BoxDecoration(
-               image: DecorationImage(
-                 image: AssetImage(
-                   "assets/img/error.png",
-                 ),
-                 fit: BoxFit.contain
-               )
-             ),
+        endDrawer: Mydrawer(),
+
+        floatingActionButton: FloatingActionButton(
+          elevation: 10,
+          child: Icon(Icons.add,
+            color:Theme.of(context).floatingActionButtonTheme.focusColor,),
+          onPressed: () {  },
+          backgroundColor: Color.fromRGBO(204, 88, 76, 1)
+          //params
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: Consumer<Login_signup_prov>(
+          builder:(context,pr,ch)=> Container(
+            color: Theme.of(context).backgroundColor,
+            child: AnimatedBottomNavigationBar(
+              icons: [
+                Icons.home_outlined,
+                Icons.favorite_border,
+                Icons.contact_mail_outlined,
+                Icons.person_outline,
+              ],
+              backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+              notchMargin: 10,
+              
+
+              activeColor:Color.fromRGBO(204, 88, 76, 1),
+              inactiveColor:Theme.of(context).iconTheme.color,
+              activeIndex: pr.activenum,
+              gapLocation: GapLocation.center,
+              notchSmoothness: NotchSmoothness.softEdge,
+              onTap:(index){
+                pr.chahnge_active(index);
+              },
+              //other params
             ),
           ),
         ),
-      ),
+        body:Consumer<Prov_Check_connect>(
+          builder: (context,pr,ch)=>FutureBuilder(
+            future: pr.check_internet(),
+            builder: (context,snapshot)=> pr.net_connected==true?
+            Consumer<Login_signup_prov>(builder:(context,prov,ch)=>ins_screen_list[prov.activenum] ):Center(
+              child:Container(
+               decoration: BoxDecoration(
+                 image: DecorationImage(
+                   image: AssetImage(
+                     "assets/img/error.png",
+                   ),
+                   fit: BoxFit.contain
+                 )
+               ),
+              ),
+            ),
+          ),
+        ),
 
-    );
+      );
   }
 }

@@ -19,7 +19,8 @@ class _MydrawerState extends State<Mydrawer> {
       child: ClipRRect(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(25),bottomLeft: Radius.circular(25)),
         child: Drawer(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).backgroundColor,
+
           child: ListView(
 
             children: [
@@ -27,7 +28,9 @@ class _MydrawerState extends State<Mydrawer> {
 
               Container(
                 height: height/3,
+
                 child: DrawerHeader(
+
                   child: Center(
                       child: Stack(
                         alignment: Alignment.center,
@@ -49,7 +52,7 @@ class _MydrawerState extends State<Mydrawer> {
                             height: height/5.75,
                             width: width/2.25,
                             child: CircleAvatar(
-                              backgroundColor: Colors.white,
+                              backgroundColor: Theme.of(context).backgroundColor,
                             ),
                           ),
                           Container(
@@ -62,15 +65,22 @@ class _MydrawerState extends State<Mydrawer> {
                         ],)
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).backgroundColor,
                   ),),
               ),
               for(var item in drawerlist)
                 Column(
                   children: [
                     ListTile(
-                      title: item['title'],
-                      leading: item['icon'],
+                      title: Text(
+                        item['title'],textAlign: TextAlign.right, textDirection: TextDirection.rtl,
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+
+                        ),
+                      ),
+                      leading: Opacity(
+                          opacity: .6,
+                          child: Icon(item['icon'],color: Theme.of(context).textTheme.subtitle1!.color,)),
                       onTap: (){
                         item['func'](context);
                       },

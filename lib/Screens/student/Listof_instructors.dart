@@ -16,6 +16,7 @@ class _Instructor_listState extends State<Instructor_list> {
 
   // Build animated item (helper for all examples)
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  final sc=PageController(initialPage: 0,viewportFraction: 1);
   @override
   Widget build(BuildContext context) {
     var size=MediaQuery.of(context).size;
@@ -23,12 +24,12 @@ class _Instructor_listState extends State<Instructor_list> {
     var width=size.width;
 
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(.95),
+      backgroundColor: Theme.of(context).backgroundColor,
 
       key: scaffoldKey,
       endDrawer: Mydrawer(),
       appBar: AppBar(
-        backgroundColor: Colors.orange[100],
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         leading: Container(
           margin: EdgeInsets.only(left: width/60),
           child: Stack(
@@ -63,7 +64,7 @@ class _Instructor_listState extends State<Instructor_list> {
                 width: width/12,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.white
+                    color: Theme.of(context).backgroundColor
                 ),
                 child: Icon(Icons.settings)),
             tooltip: 'Setting Icon',
@@ -76,7 +77,7 @@ class _Instructor_listState extends State<Instructor_list> {
                 width: width/12,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.white
+                    color: Theme.of(context).backgroundColor
                 ),
                 child: Icon(Icons.menu)),
             tooltip: 'Setting Icon',
@@ -89,6 +90,8 @@ class _Instructor_listState extends State<Instructor_list> {
 
       body:AnimationLimiter(
         child: ListView.builder(
+          controller: sc,
+
           itemCount: Instructorlist.length,
           itemBuilder: (BuildContext context, int index) {
             return AnimationConfiguration.staggeredList(
@@ -112,7 +115,7 @@ class _Instructor_listState extends State<Instructor_list> {
                             height: height/6,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Colors.white
+                                color: Theme.of(context).cardColor
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

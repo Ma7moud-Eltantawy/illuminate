@@ -19,76 +19,106 @@ class _Search_screenState extends State<Search_screen> {
 
   @override
   Widget build(BuildContext context) {
+    var size=MediaQuery.of(context).size;
+    var height=size.height;
+    var width=size.width;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.orange[100],
-        leading: IconButton(
-          tooltip: 'Navigation menu',
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        iconTheme: Theme.of(context).iconTheme.copyWith(
+          color: Color.fromRGBO(204, 88, 76, 1),
         ),
-        title: const Text('Numbers'),
+        leading: Container(
+          margin: EdgeInsets.only(left: width/60),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color:Color.fromRGBO(204, 88, 76, 1),
+                    shape: BoxShape.circle
+                ),
+                height: height/10,
+                width: width/10.3,
+
+              ),
+              Container(
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/img/tantawy.jpg'),
+                ),
+                height: height/10.1,
+                width: width/12.8,
+
+              ),
+
+            ],
+          ),
+        ),
+        leadingWidth: width/10,
+        title: const Text(''),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Search',
-            icon: const Icon(Icons.search),
-            onPressed: () async {
-
+            icon: Container(
+                height: height/25,
+                width: width/12,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).backgroundColor
+                ),
+                child: Icon(Icons.search)),
+            tooltip: 'Setting Icon',
+            color: Color.fromRGBO(204, 88, 76, 1),
+            onPressed: () {
               showSearch(context: context, delegate: DataSearch());
             },
           ),
           IconButton(
-            tooltip: 'More (not implemented)',
-            icon: Icon(
-              Theme.of(context).platform == TargetPlatform.iOS
-                  ? Icons.more_horiz
-                  : Icons.menu,
-            ),
-            onPressed: () {
-              _scaffoldKey.currentState!.openEndDrawer();
-            },
-          ),
+            icon: Container(
+                height: height/25,
+                width: width/12,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).backgroundColor
+                ),
+                child: Icon(Icons.menu)),
+            tooltip: 'Setting Icon',
+            color: Color.fromRGBO(204, 88, 76, 1),
+            onPressed:() => _scaffoldKey.currentState!.openEndDrawer(),
+          ), //Ic
+
+
         ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            MergeSemantics(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
                   Row(
+                    textDirection: TextDirection.rtl,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
-                      Text('Press the '),
-                      Tooltip(
-                        message: 'search',
-                        child: Icon(
-                          Icons.search,
-                          size: 18.0,
-                        ),
-                      ),
-                      Text(' icon in the AppBar'),
+                    children: [
+                      Text("اضغط على",textAlign: TextAlign.center,),
+                      Container(
+                          margin: EdgeInsets.symmetric(horizontal: width/20),
+                          child: Icon(Icons.search)),
+                      Text("لكى تتمكن من البحث",textAlign: TextAlign.center,),
+
                     ],
                   ),
-                  const Text(
-                      'and search '),
-                ],
-              ),
-            ),
+
+
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Theme.of(context).unselectedWidgetColor,
         tooltip: 'Back', // Tests depend on this label to exit the demo.
         onPressed: () {
           Navigator.of(context).pop();
         },
-        label: const Text('Close demo'),
+        label: const Text('الغاء'),
         icon: const Icon(Icons.close),
       ),
       endDrawer: Mydrawer(),

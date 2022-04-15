@@ -34,7 +34,7 @@ class txtformfield extends StatelessWidget {
       textAlignVertical: TextAlignVertical.top,
       obscureText: false,
       style: TextStyle(
-          color: Color.fromRGBO(204, 88, 76, 1)
+          color: Theme.of(context).unselectedWidgetColor,
       ),
       decoration: InputDecoration(
         errorText: errortext,
@@ -43,7 +43,7 @@ class txtformfield extends StatelessWidget {
         hintText: hinttext,
         hintStyle: TextStyle(
             fontSize: 12,
-            color: Color.fromRGBO(204, 88, 76, 1)
+            color: Theme.of(context).unselectedWidgetColor,
 
         ),
 

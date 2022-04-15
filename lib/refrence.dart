@@ -3,30 +3,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:illuminate/providers/Prov_profile.dart';
 import 'package:illuminate/widgets/Profile_Page.dart';
+import 'package:illuminate/widgets/settings_screen.dart';
 import 'package:provider/provider.dart';
 
 List<Map<String,dynamic>> drawerlist=[
   {
-    'title': Text('تعديل الملف الشخصى', textAlign: TextAlign.right,
-      textDirection: TextDirection.rtl,),
-    'icon':  Icon(Icons.person_outlined),
+    'title': "تعديل الملف الشخصى",
+    'icon':  Icons.person_outlined,
     'func': (BuildContext con) {
       Navigator.of(con).pushNamed(Profile_data_Screen.scid);
     },
   },
   {
-    'title': Text('الاعدادات', textAlign: TextAlign.right,
-      textDirection: TextDirection.rtl,),
-    'icon':  Icon(Icons.settings_outlined),
+    'title':"الاعدادات",
+    'icon':Icons.settings_outlined,
+    'func':(BuildContext con) {
+      Navigator.of(con).pushNamed(Settings_screen.scid);
+    },
   },
   {
-    'title': Text("حول التطبيق",textAlign: TextAlign.right,textDirection: TextDirection.rtl,),
-    'icon':  Icon(Icons.info_outlined),
+    'title': "حول التطبيق",
+    'icon':  Icons.info_outlined,
     'func': () {},
   },
   {
-    'title':  Text("تسجيل الخروج",textAlign: TextAlign.right,textDirection: TextDirection.rtl,),
-    'icon':  Icon(Icons.logout_outlined),
+    'title':"تسجيل الخروج",
+    'icon': Icons.logout_outlined,
     'func': () {},
   },
 

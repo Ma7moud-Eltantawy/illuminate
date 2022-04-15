@@ -32,8 +32,8 @@ class _Change_profile_screenState extends State<Change_profile_screen> {
     Navigator.of(context).pop();
     _scaffoldKey.currentState!.showSnackBar(
         new SnackBar(
-          duration: Duration(seconds: 2),
-            backgroundColor: Color.fromRGBO(204, 88, 76, 1),
+          duration: Duration(seconds: 3),
+            backgroundColor: Theme.of(context).unselectedWidgetColor,
             content: Text('تم تعديل كلمة المرور بنجاح',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -55,8 +55,13 @@ class _Change_profile_screenState extends State<Change_profile_screen> {
     var width=size.width;
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Colors.white,
-      appBar:AppBar(backgroundColor: Color.fromRGBO(204, 88, 76, 1),
+      backgroundColor: Theme.of(context).backgroundColor,
+      appBar:AppBar(
+        iconTheme: Theme.of(context).iconTheme.copyWith(
+          color: Colors.white
+        ),
+
+        backgroundColor: Theme.of(context).unselectedWidgetColor,
       elevation: 0,
 
       ) ,
@@ -77,13 +82,13 @@ class _Change_profile_screenState extends State<Change_profile_screen> {
                     ),
                   ),
                   height: height/5,
-                  color: Color.fromRGBO(204, 88, 76, 1),
+                  color: Theme.of(context).backgroundColor,
                 ),
               ),
               SizedBox(height: height/8,),
               Expanded(child: Container(
 
-                color: Colors.white,
+                color:  Theme.of(context).backgroundColor,
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -135,11 +140,13 @@ class _Change_profile_screenState extends State<Change_profile_screen> {
 
                             }
                             ,colors: [
-                              Color.fromRGBO(233, 131, 131, 1.0),
 
-                              Color.fromRGBO(236, 104, 104, 1.0),
+                              Theme.of(context).unselectedWidgetColor.withOpacity(.5),
+                              Theme.of(context).unselectedWidgetColor.withOpacity(.75),
+                              Theme.of(context).unselectedWidgetColor,
 
-                              Color.fromRGBO(204, 88, 76, 1),
+                              Theme.of(context).unselectedWidgetColor,
+
 
 
                             ], txt: "تأكيد التعديل",
@@ -299,13 +306,16 @@ class _Change_profile_screenState extends State<Change_profile_screen> {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
-                    alignment: Alignment.center,
-                    height: height/5.1,
-                    width: width/2,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle
+                  Card(
+                    shape: const CircleBorder(),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: height/5.1,
+                      width: width/2,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        shape: BoxShape.circle
+                      ),
                     ),
                   ),
                   Consumer<Prov_profile_page>(
@@ -344,7 +354,7 @@ class _Change_profile_screenState extends State<Change_profile_screen> {
                         height: height/12,
                         width: width/12,
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(204, 88, 76, 1),
+                            color: Theme.of(context).unselectedWidgetColor.withOpacity(.7),
                             shape: BoxShape.circle
                         ),
 
@@ -359,7 +369,7 @@ class _Change_profile_screenState extends State<Change_profile_screen> {
 
                                 height: height/5,
                                 decoration: BoxDecoration(
-                                   color: Colors.white,
+                                   color: Theme.of(context).backgroundColor,
                                   borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(15),
                                     topLeft: Radius.circular(15),

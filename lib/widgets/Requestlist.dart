@@ -16,7 +16,7 @@ class _ReqlistState extends State<Reqlist> {
     var height=size.height;
     var width=size.width;
     return Scaffold(
-
+      backgroundColor: Theme.of(context).backgroundColor,
       body: AnimationLimiter(
         child: ListView.builder(
           itemCount: Instructorlist.length,
@@ -34,6 +34,7 @@ class _ReqlistState extends State<Reqlist> {
                         children: [
 
                           Card(
+                            color:Theme.of(context).cardColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius:BorderRadius.circular(10)
                             ),
@@ -42,7 +43,7 @@ class _ReqlistState extends State<Reqlist> {
                               height: height/6,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white
+                                  color: Theme.of(context).cardColor,
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

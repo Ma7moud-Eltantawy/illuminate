@@ -23,6 +23,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
     var height=size.height;
     var width=size.width;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -47,7 +48,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                           children: [
                             Text("ماذا يدور فى عقلك !؟",style:Theme.of(context).textTheme.bodyText1!.copyWith(
                                 fontSize: height/55,
-                                color: Colors.black45,
+                                color: Theme.of(context).textTheme.subtitle1!.color,
                                 fontFamily: "cairo"
                             ),),
                             SizedBox(width: width/20,),
@@ -80,7 +81,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                                   children: [
                                     TextSpan(text:"ااضافة صوره",style:Theme.of(context).textTheme.bodyText1!.copyWith(
                                         fontSize: height/70,
-                                        color: Colors.black45,
+                                        color: Theme.of(context).textTheme.subtitle1!.color,
                                         fontFamily: "cairo"
                                     ),),
                                     WidgetSpan(
@@ -107,7 +108,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                                   children: [
                                     TextSpan(text:"تحديد الموقع",style:Theme.of(context).textTheme.bodyText1!.copyWith(
                                         fontSize: height/70,
-                                        color: Colors.black45,
+                                        color: Theme.of(context).textTheme.subtitle1!.color,
                                         fontFamily: "cairo"
                                     ),),
                                     WidgetSpan(
@@ -153,7 +154,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                                     width: width/3,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white
+                                        color: Theme.of(context).cardColor,
                                     ),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -190,7 +191,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                                           ),
                                         ),
                                         Container(
-                                          margin: EdgeInsets.only(bottom: height/30),
+                                          margin: EdgeInsets.only(bottom: height/60),
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
@@ -318,7 +319,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                           children: [
                             Container(
                               height: data.img==""?height/4:height/2,
-                              color: Colors.white,
+                              color: Theme.of(context).backgroundColor,
                               child: Column(
                                 children: [
                                   Expanded(
@@ -326,7 +327,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                                       child: Container(
 
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: Theme.of(context).cardColor,
                                             border: Border.symmetric(
                                                 horizontal: BorderSide(
                                                     color: Colors.black26,
@@ -374,10 +375,10 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                                     flex:data.img==""?2:1,
                                     child: Container(
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: Theme.of(context).cardColor,
                                             border: Border.symmetric(
                                                 horizontal: BorderSide(
-                                                    color: Colors.black26,
+                                                    color: Theme.of(context).cardColor,
                                                     width: width/680
                                                 )
                                             )
@@ -414,7 +415,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                                                   width: width/680
                                               )
                                           ),
-                                          color: Colors.white,
+                                          color: Theme.of(context).backgroundColor,
                                           image: DecorationImage(
                                               image: data.img!=""?AssetImage("${data.img}"):AssetImage("assets/img/back.png"),
                                               fit: BoxFit.contain
@@ -430,7 +431,7 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                                     child: Container(
 
                                       decoration: BoxDecoration(
-                                        color:Colors.white,
+                                        color:Theme.of(context).backgroundColor,
                                         border: Border.symmetric(
                                             horizontal: BorderSide(
                                                 color: Colors.black26,
@@ -440,22 +441,22 @@ class _Ins_Home_CategoryState extends State<Ins_Home_Category> {
                                       ),
                                       child: Row(
                                         children: [
-                                          Expanded(child: Container(color: Colors.white,
+                                          Expanded(child: Container(color: Theme.of(context).cardColor,
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
-                                                  IconButton(onPressed: (){}, icon: Icon(Icons.comment_outlined),color: Colors.black45,),
+                                                  IconButton(onPressed: (){}, icon: Icon(Icons.comment_outlined),color:Theme.of(context).iconTheme.color,),
 
                                                 ],
                                               )
 
                                           )),
                                           SizedBox(width: width/680,child: Container(color: Colors.black26,width: width/680,),),
-                                          Expanded(child: Container(color: Colors.white,
+                                          Expanded(child: Container(color: Theme.of(context).cardColor,
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
-                                                  IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border),color: Colors.black45,),
+                                                  IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border),color: Theme.of(context).iconTheme.color,),
                                                   Text(data.likesnum.toString(),style: TextStyle(
                                                       color: Colors.black45
                                                   ),),

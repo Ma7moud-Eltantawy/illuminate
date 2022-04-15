@@ -42,7 +42,7 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(204, 88, 76, 1),
+          backgroundColor: Theme.of(context).unselectedWidgetColor,
           elevation: 0,
         ),
         body: Column(
@@ -52,12 +52,12 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
                Container(
                  height:height/2.7 ,
                  width: width,
-                 color: Colors.white,
+                 color: Theme.of(context).backgroundColor
                ),
                Container(
                height:height/3.5 ,
                width: width,
-               color:  Color.fromRGBO(204, 88, 76, 1),
+               color:  Theme.of(context).unselectedWidgetColor,
              ),
                Positioned(
                  left:width/30 ,
@@ -78,9 +78,7 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
                            children: [
 
                              Card(
-                               shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.circular(200),
-                               ),
+                               shape: const CircleBorder(),
                                child: Consumer<Prov_profile_page>(
                                  builder:(context,prov,ch)=> Container(
                                    height: height/9,
@@ -108,6 +106,7 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
                                      builder:(context,prov,ch)=> Text(prov.Username,
                                        textAlign: TextAlign.center,
                                        style: TextStyle(
+                                         color:  Theme.of(context).textTheme.subtitle1!.color,
                                        fontWeight: FontWeight.w600,
                                        fontStyle: FontStyle.italic,
                                      ),),
@@ -116,6 +115,7 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
                                      builder:(context,prov,ch)=>Text(prov.email,
                                        textAlign: TextAlign.center,
                                        style: TextStyle(
+                                           color:  Theme.of(context).textTheme.subtitle1!.color,
                                          fontWeight: FontWeight.w600,
                                          fontStyle: FontStyle.italic
                                      ),),
@@ -137,14 +137,14 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
                              opacity: .8,
                              child: Container(
                                decoration: BoxDecoration(
-                                   color:  Color.fromRGBO(204, 88, 76, 1),
+                                   color:   Theme.of(context).unselectedWidgetColor,
                                  borderRadius: BorderRadius.circular(15)
                                ),
                                height: height/20,
-                               width: width/9,
+                               width: width/10,
 
                                child: IconButton(
-                         icon: Icon(Icons.edit,color:  Colors.white,size: width/20,),
+                         icon: Icon(Icons.edit,color:  Colors.white,size: width/22,),
                          onPressed: (){
                              Navigator.of(context).pushNamed(Change_profile_screen.scid);
                          },
@@ -171,6 +171,8 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
              ],
            ),
             Expanded(child:  Container(
+
+              color: Theme.of(context).backgroundColor,
               alignment: Alignment.center,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -214,13 +216,14 @@ class mylisttile extends StatelessWidget {
       title: Consumer<Prov_profile_page>(
         builder:(context,prov,ch)=> Text(txt ,textAlign: TextAlign.center,
           style: TextStyle(
+            color:  Theme.of(context).textTheme.subtitle1!.color,
             fontSize: width/23,
             fontWeight: FontWeight.w600,
           ),
         ),
       ),
       leading: CircleAvatar(
-        backgroundColor:  Color.fromRGBO(204, 88, 76, 1),
+        backgroundColor:  Theme.of(context).unselectedWidgetColor,
         child: Icon(
             icon,
             color:   Colors.white

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:illuminate/Screens/student/Listof_instructors.dart';
 import 'package:illuminate/Screens/student/Search_Screen.dart';
@@ -57,7 +58,7 @@ class _Home_screenState extends State<Home_screen> {
                              Container(
                                decoration: BoxDecoration(
                                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(15),bottomLeft: Radius.circular(15)),
-                                 color: Colors.orange[100],
+                                 color: Theme.of(context).appBarTheme.backgroundColor,
                                ),
                                height: height/1.9,
 
@@ -100,7 +101,8 @@ class _Home_screenState extends State<Home_screen> {
                                right: width/18,
                                left: width/18,
                                child: Card(
-                                 elevation: 1,
+                                 color: Theme.of(context).cardColor,
+                                 elevation: 5,
                                  shape: RoundedRectangleBorder(
                                    borderRadius: BorderRadius.circular(10),
                                  ),
@@ -108,8 +110,9 @@ class _Home_screenState extends State<Home_screen> {
                                    height: height/10,
                                    width: double.infinity,
                                    decoration: BoxDecoration(
+                                     border: Border.all(color: Theme.of(context).backgroundColor,width: width/400),
                                      borderRadius: BorderRadius.circular(10),
-                                     color: Colors.white,
+                                     color: Theme.of(context).cardColor.withOpacity(.7),
                                    ),
                                    child:Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                      children: [
@@ -140,6 +143,7 @@ class _Home_screenState extends State<Home_screen> {
                                                ),),
                                                Text("ابدأ التعلم ، اختار مُعلمك",style: TextStyle(
                                                  fontSize: height/45,
+                                                 color:Theme.of(context).textTheme.subtitle1!.color
 
                                                ),),
 
@@ -239,38 +243,33 @@ class _Home_screenState extends State<Home_screen> {
                                  shape: RoundedRectangleBorder(
                                      borderRadius: BorderRadius.circular(10)
                                  ),
-                                 child: Container(
-                                   height: 50,
-                                   width: double.infinity,
-                                   decoration: BoxDecoration(
-                                     borderRadius: BorderRadius.circular(10),
-                                     color: Colors.white,
-                                   ),
-                                   child: TextField(
-                                     textAlignVertical: TextAlignVertical.top,
-                                     textAlign: TextAlign.right,
-                                     decoration: InputDecoration(
-                                       icon:IconButton(
-                                         icon: Icon(Icons.search),
-                                         onPressed: (){
-                                           Navigator.of(context).pushNamed(Search_screen.scid);
+                                 child: GestureDetector(
+                                   onTap: ()
+                                   {
+                                     Navigator.of(context).pushNamed(Search_screen.scid);
+                                   },
+                                   child: Container(
+                                     height: 50,
 
-                                         },
-                                         iconSize: width/15,
-                                       ),
-                                       hintText: 'أدخل عنوان البحث',
-
-                                       border: InputBorder.none,
-                                       contentPadding: EdgeInsets.only(
-                                         right: width/50,
-
-                                       ),
+                                     width: double.infinity,
+                                     decoration: BoxDecoration(
+                                       borderRadius: BorderRadius.circular(10),
+                                       color: Theme.of(context).backgroundColor,
                                      ),
-                                     onChanged: (val) {
-                                       setState(() {
+                                     child: Container(
+                                       margin: EdgeInsets.symmetric(horizontal: width/20),
+                                       child: Row(
+                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(Icons.search,size: width/20,),
+                                          Text("البحث",style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                                            fontSize: width/25,
+                                            color: Theme.of(context).iconTheme.color
+                                          ),),
 
-                                       });
-                                     },
+                                        ],
+                                       ),
+                                     )
                                    ),
                                  ),
                                ),
@@ -282,7 +281,7 @@ class _Home_screenState extends State<Home_screen> {
                      ),
                    ), //FlexibleSpaceBar
                    expandedHeight: height/1.8,
-                   backgroundColor:  Colors.white,
+                   backgroundColor:  Theme.of(context).backgroundColor,
 
                    leading: Container(
                      margin: EdgeInsets.only(left: width/60),
@@ -318,7 +317,7 @@ class _Home_screenState extends State<Home_screen> {
                            width: width/12,
                            decoration: BoxDecoration(
                                borderRadius: BorderRadius.circular(10),
-                               color: Colors.white
+                               color: Theme.of(context).backgroundColor
                            ),
                            child: Icon(Icons.settings)),
                        tooltip: 'Setting Icon',
@@ -331,7 +330,7 @@ class _Home_screenState extends State<Home_screen> {
                            width: width/12,
                            decoration: BoxDecoration(
                                borderRadius: BorderRadius.circular(10),
-                               color: Colors.white
+                               color: Theme.of(context).backgroundColor
                            ),
                            child: Icon(Icons.menu)),
                        tooltip: 'Setting Icon',
@@ -347,14 +346,16 @@ class _Home_screenState extends State<Home_screen> {
                  SliverList(
                    delegate: SliverChildBuilderDelegate(
                          (context, index) => index==0?
-                     Container(child: Text("أقرب المعلمين:",textDirection: TextDirection.rtl,)):
+                     Container(
+                         color: Theme.of(context).backgroundColor,
+                         child: Text("أقرب المعلمين:",textDirection: TextDirection.rtl,)):
                      Container(
                        height: height/12,
                        child: ListTile(
                          leading: CircleAvatar(
                            backgroundImage: (index % 2 == 0) ? AssetImage('assets/img/tantawy.jpg') : AssetImage('assets/img/hamama.jpg'),
                          ),
-                         tileColor: (index % 2 == 0) ? Color.fromRGBO(255, 255, 255, 1) : Color.fromRGBO(255, 225, 204, 0.2),
+                         tileColor: (index % 2 == 0) ? Theme.of(context).backgroundColor:  Theme.of(context).appBarTheme.backgroundColor!.withOpacity(.7),
                          title: Center(
                            child:  (index % 2 == 0) ?Column(
                              crossAxisAlignment: CrossAxisAlignment.center,
@@ -366,9 +367,9 @@ class _Home_screenState extends State<Home_screen> {
                                RichText(
                                  text: TextSpan(
                                    children: [
-                                     TextSpan(text:"اجا,الدقهليه",style:Theme.of(context).textTheme.bodyText1!.copyWith(
+                                     TextSpan(text:"اجا,الدقهليه",style:Theme.of(context).textTheme.subtitle1!.copyWith(
                                          fontSize: height/70,
-                                         color: Colors.black,
+
                                          fontFamily: "cairo"
                                      ),),
                                      WidgetSpan(
@@ -388,9 +389,9 @@ class _Home_screenState extends State<Home_screen> {
                                RichText(
                                  text: TextSpan(
                                    children: [
-                                     TextSpan(text:"المحله,غربيه",style:Theme.of(context).textTheme.bodyText1!.copyWith(
+                                     TextSpan(text:"المحله,غربيه",style:Theme.of(context).textTheme.subtitle1!.copyWith(
                                          fontSize: height/70,
-                                         color: Colors.black,
+
                                          fontFamily: "cairo"
                                      ),),
                                      WidgetSpan(

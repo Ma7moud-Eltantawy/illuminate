@@ -10,6 +10,7 @@ class _Fav_List_ScreenState extends State<Fav_List_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
         child:Text("Fav_Screen"),
       ),
