@@ -10,6 +10,7 @@ import 'package:illuminate/Screens/signup.dart';
 import 'package:illuminate/Screens/student/Search_Screen.dart';
 import 'package:illuminate/providers/Check_connected.dart';
 import 'package:illuminate/providers/Prov_Theme_status.dart';
+import 'package:illuminate/providers/Prov_addpost.dart';
 import 'package:illuminate/providers/Prov_inst_home_page.dart';
 import 'package:illuminate/providers/Prov_location.dart';
 import 'package:illuminate/providers/Prov_login_signup.dart';
@@ -21,6 +22,7 @@ import 'package:illuminate/widgets/settings_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 
+import 'Screens/Instructor/add_post.dart';
 import 'Screens/Instructor/instructor_home_screen.dart';
 import 'Screens/Instructor/requests_list.dart';
 import 'Screens/student/stu_home_screen.dart';
@@ -30,7 +32,6 @@ void main() async
   WidgetsFlutterBinding.ensureInitialized();
   await Geolocator.requestPermission();
   Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  print(position.longitude);
   runApp(
     MultiProvider(
       providers: [
@@ -40,12 +41,13 @@ void main() async
         ChangeNotifierProvider.value(value:Prov_Check_connect()),
         ChangeNotifierProvider.value(value:Prov_profile_page()),
         ChangeNotifierProvider.value(value:Prov_theme_status()),
+        ChangeNotifierProvider.value(value:Prov_add_post()),
       ],
       child: Builder(
         builder: (context) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-           initialRoute:Home_screen.scid,
+           initialRoute:  Splash_Screen.scid,
            routes: {
              Splash_Screen.scid:(context)=>Splash_Screen(),
              Login_Screen.scid:(context)=> Login_Screen(),
@@ -60,6 +62,8 @@ void main() async
              Change_profile_screen.scid:(context)=>   Change_profile_screen(),
              Search_screen.scid:(context)=> Search_screen(),
              Settings_screen.scid:(context)=>Settings_screen(),
+             Add_post_screen.scid:(context)=>  Add_post_screen(),
+
 
 
 

@@ -11,21 +11,36 @@ class Settings_screen extends StatefulWidget {
 }
 
 class _Settings_screenState extends State<Settings_screen> {
+
   @override
   Widget build(BuildContext context) {
+    var size=MediaQuery.of(context).size;
+    var height=size.height;
+    var width=size.width;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-      ),
-      body: Center(
-        child:  Consumer<Prov_theme_status>(
-          builder:(context,prov,ch)=> CupertinoSwitch(
-            value:prov.active_switch ,
-            onChanged: (value) {
-
-              prov.changeThemedata(value);
-            },
-          ),
+        title: Text("الاعدادات"),
+        centerTitle: true,
+        titleTextStyle: Theme.of(context).textTheme.subtitle1!.copyWith(
+          fontSize: width/20
         ),
+      ),
+      body: Column(
+        children: [
+          ListTile(
+            leading:  Consumer<Prov_theme_status>(
+              builder:(context,prov,ch)=> CupertinoSwitch(
+                value:prov.active_switch ,
+                onChanged: (value) {
+
+                  prov.changeThemedata(value);
+                },
+              ),
+            ),
+            title:Text("الوضع الداكن",textDirection: TextDirection.rtl,textAlign:TextAlign.right,) ,
+          ),
+        ],
       ),
     );
   }

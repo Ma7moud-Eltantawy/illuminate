@@ -83,13 +83,6 @@ class Address {
   }
 }
 
-
-
-
-
-
-
-
 class Geo {
   String? lat;
   String? lng;
