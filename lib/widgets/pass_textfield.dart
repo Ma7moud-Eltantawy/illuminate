@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 class password_txtfield extends StatelessWidget {
  password_txtfield({
     required this.controller,
@@ -24,26 +23,26 @@ class password_txtfield extends StatelessWidget {
 
           keyboardType: TextInputType.visiblePassword,
           obscureText: prov.showdata1!,
-          style: TextStyle(
+          style: const TextStyle(
               color: Color.fromRGBO(204, 88, 76, 1)
           ),
           decoration: InputDecoration(
             errorText: "",
             prefixIcon: IconButton(onPressed: () {
               prov.changeshow(prov.showdata1);
-            }, icon:prov.showdata==true? Icon(Icons.visibility_off_sharp):Icon(Icons.visibility_sharp),
+            }, icon:prov.showdata==true? const Icon(Icons.visibility_off_sharp):const Icon(Icons.visibility_sharp),
 
 
 
             ),
             hintText: 'الرجاء ادخال كلمة المرور',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
                 fontSize: 12,
                 color: Color.fromRGBO(204, 88, 76, 1)
 
             ),
 
-            errorStyle: TextStyle(
+            errorStyle: const TextStyle(
 
             ),
 

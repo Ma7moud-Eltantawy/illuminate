@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:illuminate/providers/Shared_pref.dart';
 import 'package:illuminate/widgets/Change_Profile_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/Prov_profile.dart';
 class Profile_data_Screen extends StatefulWidget {
-  static const scid="Profile_data";
+  static const scid="stu_Profile_data";
   const Profile_data_Screen({Key? key}) : super(key: key);
 
   @override
@@ -71,7 +72,7 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
                    child: Stack(
                      alignment: Alignment.center,
                      children: [
-                       Container(
+                       SizedBox(
                          height: height/5,
                          child: Column(
                            crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,20 +80,21 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
 
                              Card(
                                shape: const CircleBorder(),
-                               child: Consumer<Prov_profile_page>(
+                               child: Consumer<Prov_Shared_Pref>(
                                  builder:(context,prov,ch)=> Container(
                                    height: height/9,
                                    width: width/4,
-                                   decoration: prov.profimg==null?BoxDecoration(
+                                   decoration: prov.stu_prof_data==null?const BoxDecoration(
                                      shape: BoxShape.circle,
                                      image: DecorationImage(
                                        image: AssetImage("assets/img/default.png"),
                                        fit: BoxFit.cover
                                      )
                                    ):BoxDecoration(
+                                     border: Border.all(color: Theme.of(context).unselectedWidgetColor),
                                  shape: BoxShape.circle,
                                  image: DecorationImage(
-                                     image: FileImage(prov.profimg!),
+                                     image: NetworkImage('http://mohamedelbadry.me/illuminate/images/${Provider.of<Prov_Shared_Pref>(context,listen: false).stu_prof_data!.data!.profile!.image!.split('/').last}'),
                                    fit: BoxFit.cover
                                )
                                    ),
@@ -102,8 +104,8 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
                              Container(
                                child: Column(
                                  children: [
-                                   Consumer<Prov_profile_page>(
-                                     builder:(context,prov,ch)=> Text(prov.Username,
+                                   Consumer<Prov_Shared_Pref>(
+                                     builder:(context,prov,ch)=> Text(prov.stu_prof_data!.data!.profile!.name!.toString(),
                                        textAlign: TextAlign.center,
                                        style: TextStyle(
                                          color:  Theme.of(context).textTheme.subtitle1!.color,
@@ -111,8 +113,8 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
                                        fontStyle: FontStyle.italic,
                                      ),),
                                    ),
-                                   Consumer<Prov_profile_page>(
-                                     builder:(context,prov,ch)=>Text(prov.email,
+                                   Consumer<Prov_Shared_Pref>(
+                                     builder:(context,prov,ch)=>Text(prov.stu_prof_data!.data!.profile!.email!.toString(),
                                        textAlign: TextAlign.center,
                                        style: TextStyle(
                                            color:  Theme.of(context).textTheme.subtitle1!.color,
@@ -129,28 +131,7 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
                            ],
                          ),
                        ),
-                       Positioned(
-                           top:height/180,
-                           right:width/50,
 
-                           child: Opacity(
-                             opacity: .8,
-                             child: Container(
-                               decoration: BoxDecoration(
-                                   color:   Theme.of(context).unselectedWidgetColor,
-                                 borderRadius: BorderRadius.circular(15)
-                               ),
-                               height: height/20,
-                               width: width/10,
-
-                               child: IconButton(
-                         icon: Icon(Icons.edit,color:  Colors.white,size: width/22,),
-                         onPressed: (){
-                             Navigator.of(context).pushNamed(Change_profile_screen.scid);
-                         },
-                       ),
-                             ),
-                           )),
                      ],
                    ),
                  ),
@@ -170,23 +151,25 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
 
              ],
            ),
-            Expanded(child:  Container(
+            Expanded(child:  Consumer<Prov_Shared_Pref>(
+              builder:(context,prov,ch)=> Container(
 
-              color: Theme.of(context).backgroundColor,
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Consumer<Prov_profile_page>(builder:(context,pr,ch)=>
-                      mylisttile(width: width,txt:pr.Username,icon: Icons.person_outline,)),
-                  Consumer<Prov_profile_page>(builder:(context,pr,ch)=>
-                      mylisttile(width: width,txt:pr.Phone,icon: Icons.phone_outlined,)),
-                  Consumer<Prov_profile_page>(builder:(context,pr,ch)=>
-                      mylisttile(width: width,txt:pr.Age,icon: Icons.date_range_outlined)),
-                  Consumer<Prov_profile_page>(builder:(context,pr,ch)=>
-                      mylisttile(width: width,txt:pr.Address,icon: Icons.location_on_outlined,)),
-                ],
-                ),
+                color: Theme.of(context).backgroundColor,
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Consumer<Prov_profile_page>(builder:(context,pr,ch)=>
+                        mylisttile(width: width,txt:prov.user_data!.user!.type!.toString(),icon: Icons.person_outline,)),
+                    Consumer<Prov_profile_page>(builder:(context,pr,ch)=>
+                        mylisttile(width: width,txt:prov.stu_prof_data!.data!.profile!.phone==null?"لا يوجد معلومات":prov.stu_prof_data!.data!.profile!.phone.toString(),icon: Icons.phone_outlined,)),
+                    Consumer<Prov_profile_page>(builder:(context,pr,ch)=>
+                        mylisttile(width: width,txt:prov.stu_prof_data!.data!.profile!.age!.toString(),icon: Icons.date_range_outlined)),
+                    Consumer<Prov_profile_page>(builder:(context,pr,ch)=>
+                        mylisttile(width: width,txt:prov.stu_prof_data!.data!.profile!.address!.toString(),icon: Icons.location_on_outlined,)),
+                  ],
+                  ),
+              ),
             ),
             ),
           ],
@@ -197,7 +180,7 @@ class _Profile_data_ScreenState extends State<Profile_data_Screen> {
 }
 
 class mylisttile extends StatelessWidget {
-  mylisttile({
+  const mylisttile({
     required this.width,
     required this.txt,
     required this.icon,

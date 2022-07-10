@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:illuminate/providers/Shared_pref.dart';
+import 'package:provider/provider.dart';
 
 import '../refrence.dart';
 class Mydrawer extends StatefulWidget {
@@ -11,6 +13,7 @@ class Mydrawer extends StatefulWidget {
 class _MydrawerState extends State<Mydrawer> {
   @override
   Widget build(BuildContext context) {
+    var shared=Provider.of<Prov_Shared_Pref>(context);
     var size=MediaQuery.of(context).size;
     var height=size.height;
     var width=size.width;
@@ -18,7 +21,7 @@ class _MydrawerState extends State<Mydrawer> {
       child: SizedBox(
         width: width/1.3,
         child: ClipRRect(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(25),bottomLeft: Radius.circular(25)),
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(25),bottomLeft: Radius.circular(25)),
           child: Drawer(
             backgroundColor: Theme.of(context).backgroundColor,
 
@@ -27,7 +30,7 @@ class _MydrawerState extends State<Mydrawer> {
               children: [
 
 
-                Container(
+                SizedBox(
                   height: height/3,
 
                   child: DrawerHeader(
@@ -39,7 +42,7 @@ class _MydrawerState extends State<Mydrawer> {
                             Container(
                               height: height/5.5,
                               width: width/2,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   gradient: LinearGradient(
                                       colors: [
@@ -49,20 +52,35 @@ class _MydrawerState extends State<Mydrawer> {
                                   )
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               height: height/5.75,
                               width: width/2.25,
                               child: CircleAvatar(
                                 backgroundColor: Theme.of(context).backgroundColor,
                               ),
                             ),
-                            Container(
-                              height: height/6,
-                              width: width/2.5,
-                              child: CircleAvatar(
-                                backgroundImage: AssetImage('assets/img/tantawy.jpg'),
+                            Consumer<Prov_Shared_Pref>(
+                              builder:(context,prov,ch)=> Container(
+                                height: height/6,
+                                width: width/2.5,
+                                decoration:shared.stu_prof_data==null? BoxDecoration(
+                                  shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        image: NetworkImage('http://mohamedelbadry.me/illuminate/${shared.teach_prof_data!.data!.profile!.image.toString()}'),
+                                        fit: BoxFit.cover
+                                    ),
+                                    color: Colors.orange[100]
+                                ):BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        image: NetworkImage('http://mohamedelbadry.me/illuminate/${shared.stu_prof_data!.data!.profile!.image.toString()}'),
+                                        fit: BoxFit.cover
+                                    ),
+                                    color: Colors.orange[100]
+                                ),
                               ),
                             ),
+
                           ],)
                     ),
                     decoration: BoxDecoration(
@@ -89,7 +107,7 @@ class _MydrawerState extends State<Mydrawer> {
                       Container(
                         height: height/1000,
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             gradient: LinearGradient(
                                 colors: [
                                   Color.fromRGBO(220, 75, 76, 1),

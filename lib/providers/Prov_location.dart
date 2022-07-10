@@ -5,6 +5,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Prov_loc with ChangeNotifier
 {
+  String ?newlang;
+  String ?newlat;
+  String ?newaddress;
+  LatLng ? longlat;
+
   late LatLng  currentLatLng;
   late GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
@@ -13,13 +18,14 @@ class Prov_loc with ChangeNotifier
   late Placemark placeMark;
   late String cityname;
   late String countryname;
-  late String address;
+  String ? address;
   late String locality;
   Future<Position> getCurrentLocation() async
   {
-    var current_positin = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    currentLatLng = new LatLng(current_positin.latitude, current_positin.longitude);
-    return current_positin;
+    var currentPositin = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    currentLatLng = LatLng(currentPositin.latitude, currentPositin.longitude);
+    longlat=currentLatLng;
+    return currentPositin;
   }
   void onMapCreated(controller) {
       mapController = controller;
@@ -30,7 +36,7 @@ class Prov_loc with ChangeNotifier
     await getPlace(currentLatLng.latitude,currentLatLng.longitude);
 
     final marker = Marker(
-      markerId: MarkerId('myposition'),
+      markerId: const MarkerId('myposition'),
       position:currentLatLng,
 
       // icon: BitmapDescriptor.,
@@ -39,7 +45,7 @@ class Prov_loc with ChangeNotifier
 
       ),
     );
-   markers[MarkerId('myposition')] = marker;
+   markers[const MarkerId('myposition')] = marker;
    notifyListeners();
 
   }
@@ -47,8 +53,9 @@ class Prov_loc with ChangeNotifier
 
     locationFromAddress(searchAdd).then((result) async {
       await getPlace(result[0].latitude, result[0].longitude);
+      longlat=LatLng(result[0].latitude, result[0].longitude);
       final marker = Marker(
-        markerId: MarkerId('place_name'),
+        markerId: const MarkerId('place_name'),
         position: LatLng(result[0].latitude, result[0].longitude),
         // icon: BitmapDescriptor.,
         infoWindow: InfoWindow(
@@ -61,7 +68,7 @@ class Prov_loc with ChangeNotifier
         zoom: 15,
 
       )));
-      markers[MarkerId('place_name')] = marker;
+      markers[const MarkerId('place_name')] = marker;
       print(result[0].longitude);
     });
     notifyListeners();
@@ -71,11 +78,19 @@ class Prov_loc with ChangeNotifier
 
     // this is all you need
     Placemark placeMark  = placemarks[0];
-     cityname = placeMark.name!;
+     cityname = placeMark.administrativeArea!;
      countryname= placeMark.country!;
     locality = placeMark.locality!;
-     address = "${locality},${cityname},${countryname}";
+     address = "$locality,$cityname,$countryname";
      notifyListeners();
+  }
+  void update_loc()
+  {
+    newlang=longlat!.longitude.toString();
+    newlat=longlat!.latitude.toString();
+    newaddress=address;
+    print(newaddress);
+    notifyListeners();
   }
 
 }

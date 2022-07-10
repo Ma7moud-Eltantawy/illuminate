@@ -6,7 +6,7 @@ List<postmodel> Listpost=[];
 class postdata{
  Future<postmodel> getpostdata() async
   {
-    final String url="https://jsonplaceholder.typicode.com/posts";
+    const String url="https://jsonplaceholder.typicode.com/posts";
     final response=await http.get(Uri.parse(url));
 
     if(response.statusCode==200)

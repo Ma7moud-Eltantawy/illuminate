@@ -12,7 +12,14 @@ class Prov_add_post with ChangeNotifier {
   {
     final ImagePicker _picker = ImagePicker();
     final pickedFile = await _picker.pickImage(source: source);
-    imgfile=File(pickedFile!.path);
+    try{
+      imgfile=File(pickedFile!.path);
+
+    }
+    catch(e)
+    {
+      imgfile=null;
+    }
     notifyListeners();
 
   }

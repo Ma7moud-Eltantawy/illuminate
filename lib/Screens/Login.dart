@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:illuminate/Screens/signup.dart';
 import 'package:illuminate/Screens/student/stu_home_screen.dart';
+import 'package:illuminate/providers/Prov_profile.dart';
+import 'package:illuminate/providers/Shared_pref.dart';
 import 'package:provider/provider.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../networks/get_data/users.dart';
 import '../providers/Prov_login_signup.dart';
 import '../widgets/material_button.dart';
 import '../widgets/myalert.dart';
+import 'Instructor/instructor_home_screen.dart';
 class Login_Screen extends StatefulWidget {
   static const scid="Login";
   const Login_Screen({Key? key}) : super(key: key);
@@ -24,33 +26,6 @@ class _Login_ScreenState extends State<Login_Screen> {
     var size=MediaQuery.of(context).size;
     var height=size.height;
     var width=size.width;
-    String ? usermsg="";
-    String ? passmsg="";
-
-    void validateuser(String value) {
-      if ( value.isEmpty) {
-        setState(() {
-          usermsg =" you must enter user name";
-        });
-      }
-      else{
-        setState(() {
-          usermsg='';
-        });
-      }
-    }
-    void validatepassword(String value) {
-      if ( value.isEmpty) {
-        setState(() {
-          usermsg =" you must enter user name";
-        });
-      }
-      else{
-        setState(() {
-          usermsg='';
-        });
-      }
-    }
     return SafeArea(
       child: Scaffold(
 
@@ -60,7 +35,7 @@ class _Login_ScreenState extends State<Login_Screen> {
             children:[
             Container(
               alignment: Alignment.centerRight,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/img/back.png'),
                   opacity: 0.5,
@@ -75,7 +50,7 @@ class _Login_ScreenState extends State<Login_Screen> {
                   Text("ILLUMINATE",style: TextStyle(
                       fontSize: height/20,
                       fontWeight: FontWeight.w900,
-                      color: Color.fromRGBO(204, 88, 76, 1)
+                      color: const Color.fromRGBO(204, 88, 76, 1)
                   ),)
                 ],
               )
@@ -105,14 +80,14 @@ class _Login_ScreenState extends State<Login_Screen> {
                         keyboardType: TextInputType.emailAddress,
                         textAlignVertical: TextAlignVertical.top,
                         obscureText: false,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color.fromRGBO(204, 88, 76, 1)
                         ),
                         decoration: InputDecoration(
 
-                          prefixIcon: Icon(Icons.email_outlined),
+                          prefixIcon: const Icon(Icons.email_outlined),
                           hintText: 'الرجاء ادخال البريد الالكترونى / رقم الهاتف',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               fontSize: 12,
                               color: Color.fromRGBO(204, 88, 76, 1)
 
@@ -151,25 +126,25 @@ class _Login_ScreenState extends State<Login_Screen> {
 
                             keyboardType: TextInputType.visiblePassword,
                             obscureText: prov.showdata,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color.fromRGBO(204, 88, 76, 1)
                             ),
                             decoration: InputDecoration(
                               prefixIcon: IconButton(onPressed: () {
                                 prov.changeshow(prov.showdata);
-                              }, icon:prov.showdata==true? Icon(Icons.visibility_off_sharp):Icon(Icons.visibility_sharp),
+                              }, icon:prov.showdata==true? const Icon(Icons.visibility_off_sharp):const Icon(Icons.visibility_sharp),
 
 
 
                               ),
                               hintText: 'الرجاء ادخال كلمة المرور',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   fontSize: 12,
                                   color: Color.fromRGBO(204, 88, 76, 1)
 
                               ),
 
-                              errorStyle: TextStyle(
+                              errorStyle: const TextStyle(
 
                               ),
 
@@ -209,28 +184,60 @@ class _Login_ScreenState extends State<Login_Screen> {
 
               Mbutton(width: width, height: height,
                   func: ()async{
-                    await userlogin().getusersdata();
                     try{
-                      userlogin().getuser(_user!.text);
-                      if(userauth!.email!.isNotEmpty)
+
+
+                      if( await Provider.of<userlogin>(context,listen: false).checkuser(_user!.text, _pass!.text).then((value) => value.toString())!="email is invalid")
+
                         {
-                          Navigator.of(context).pushNamed(Home_screen.scid);
+                          print(_user!.text);
+
+                          print(Provider.of<userlogin>(context,listen: false).type.toString());
+
+                          await Provider.of<userlogin>(context,listen: false).Login(_user!.text,_pass!.text );
+                          String type= Provider.of<userlogin>(context,listen: false).type.toString();
+                          print("----$type");
+
+
+                         type=="student"? await Provider.of<Prov_Shared_Pref>(context,listen: false).get_stu_prof():
+                          await Provider.of<Prov_Shared_Pref>(context,listen: false).get_teach_prof();
+                         print(type);
+                         print("tmam");
+
+                        // print(Provider.of<Prov_Shared_Pref>(context,listen: false).stu_prof_data!.message);
+                         // print(Provider.of<Prov_Shared_Pref>(context,listen: false).teach_prof_data!.message);
+
+                          print(Provider.of<userlogin>(context,listen: false).type);
+                          type=="teacher"?Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => Instrictor_home_screen()),
+                                (Route<dynamic> route) => false,
+                          ):Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => Home_screen()),
+                                (Route<dynamic> route) => false,
+                          );
                         }
                       else{
-                        alertfunc(ctx: context, height: height, width: width, desc: "هناك خطأ فى البريد الالكترونى او كلمة المرور..", buttxt2: "انشاء حساب", but2:(){
-                          Navigator.of(context).pushNamed(Signup_Screen.scid);
-                        }, but1: (){
+
+
+                        alertfunc(ctx: context, height: height, width: width, desc: "هناك خطأ فى البريد الالكترونى او كلمة المرور..", buttxt2: "انشاء حساب",
+                            but2:(){
                           Navigator.pop(context);
+                        }, but1: (){
+                          Navigator.of(context).pushNamed(Signup_Screen.scid);
+
                         });
                       }
                     }
                     catch(e)
                     {
 
-                       alertfunc(ctx: context, height: height, width: width, desc: "هناك خطأ فى البريد الالكترونى او كلمة المرور..", buttxt2: "انشاء حساب", but1:(){
-                         Navigator.of(context).pushNamed(Signup_Screen.scid);
-                       }, but2: (){
+                       alertfunc(ctx: context, height: height, width: width, desc: "هناك خطأ فى البريد الالكترونى او كلمة المرور..", buttxt2: "انشاء حساب",
+                           but2:(){
                          Navigator.pop(context);
+                       }, but1: (){
+                         Navigator.of(context).pushNamed(Signup_Screen.scid);
                        });
                     }
 
@@ -238,7 +245,7 @@ class _Login_ScreenState extends State<Login_Screen> {
 
                   },
 
-                  colors: [
+                  colors: const [
 
                 Color.fromRGBO(59, 199, 221, 1.0),
                 Color.fromRGBO(59, 199, 221, 1.0),
@@ -249,7 +256,7 @@ class _Login_ScreenState extends State<Login_Screen> {
               SizedBox(height: height/80,),
               Mbutton(width: width, height: height,
                 func: (){},
-                colors: [
+                colors: const [
                 Color.fromRGBO(60, 90, 153, 1),
                 Color.fromRGBO(60, 90, 153, 1),
               ], txt: "التسجيل عن طريق فيسبوك",
@@ -275,7 +282,7 @@ class _Login_ScreenState extends State<Login_Screen> {
                         },
                         child: Text("انشاء حساب",style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 14,
-                            color:  Color.fromRGBO(59, 199, 221, 1.0),
+                            color:  const Color.fromRGBO(59, 199, 221, 1.0),
                             fontFamily: 'cairo',
                             fontWeight: FontWeight.w600
                         )

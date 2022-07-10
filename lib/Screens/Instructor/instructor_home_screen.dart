@@ -1,23 +1,19 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:illuminate/Screens/Instructor/Fav_posts.dart';
 import 'package:illuminate/Screens/Instructor/Home_page.dart';
 import 'package:illuminate/Screens/Instructor/List_of_students.dart';
+import 'package:illuminate/Screens/Instructor/add_post.dart';
 import 'package:illuminate/Screens/Instructor/requests_list.dart';
-import 'package:illuminate/Screens/Login.dart';
+import 'package:illuminate/networks/get_data/Get_pending_requests.dart';
 import 'package:illuminate/providers/Prov_Theme_status.dart';
-import 'package:illuminate/providers/Prov_inst_home_page.dart';
 import 'package:illuminate/providers/Prov_login_signup.dart';
+import 'package:illuminate/providers/Shared_pref.dart';
 import 'package:illuminate/widgets/drawer.dart';
 import 'package:provider/provider.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../providers/Check_connected.dart';
-import '../../refrence.dart';
 import 'Bottom_nav_Requests.dart';
 class Instrictor_home_screen extends StatefulWidget {
   static const scid="IHS";
@@ -32,17 +28,18 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
   @override
   Widget build(BuildContext context) {
     var pro=Provider.of<Prov_theme_status>(context).active_switch;
+    GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
     @override
     var size=MediaQuery.of(context).size;
     var height=size.height;
     var width=size.width;
-    var _active_index;
-    List<Widget> ins_screen_list=[
-      Ins_Home_Category(),
-      Fav_List_Screen(),
-      Bot_Nav_reqlist(),
-      Stu_List_Screen(),
+    var ActiveIndex;
+    List<Widget> insScreenList=[
+      const Ins_Home_Category(),
+      const Fav_List_Screen(),
+      const Bot_Nav_reqlist(),
+      const Stu_List_Screen(),
 
     ];
 
@@ -58,7 +55,7 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
               alignment: Alignment.center,
               children: [
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color:Color.fromRGBO(204, 88, 76, 1),
                       shape: BoxShape.circle
                   ),
@@ -66,9 +63,20 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
                   width: width/10.3,
 
                 ),
-                Container(
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/img/tantawy.jpg'),
+                SizedBox(
+                  child: Consumer<Prov_Shared_Pref>(
+                    builder:(context,prov,ch)=> Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: NetworkImage('http://mohamedelbadry.me/illuminate/${Provider.of<Prov_Shared_Pref>(context,listen: false).teach_prof_data!.data!.profile!.image.toString()}'),
+                          fit: BoxFit.cover,
+                        )
+                      ),
+
+
+                     //
+                    ),
                   ),
                   height: height/10.1,
                   width: width/12.8,
@@ -81,12 +89,15 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
           leadingWidth: width/10,
           actions: <Widget>[
             IconButton(
-              icon: Consumer<Prov_instructor_home>(
+              icon: Consumer<Prov_Pinding_Requests>(
                 builder: (context,pr,ch)=>Badge(
-                  badgeColor: Color.fromRGBO(204, 88, 76, 1),
-                  badgeContent: Text(pr.Numreq().toString(),style: TextStyle(
-                    color: Colors.white
-                  ),),
+                  badgeColor: const Color.fromRGBO(204, 88, 76, 1),
+                  badgeContent: FutureBuilder(
+                    future: pr.getrequests(),
+                    builder:(context,snaoshot)=> Text(pr.requests_list.length.toString(),style: const TextStyle(
+                      color: Colors.white
+                    ),),
+                  ),
                   position: BadgePosition.topEnd(top: -18,end: -10),
                   child: GestureDetector(
                     onTap: (){
@@ -100,12 +111,12 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
                             color: Theme.of(context).backgroundColor
                         ),
 
-                            child: Icon(Icons.group_add_outlined)),
+                            child: const Icon(Icons.group_add_outlined)),
                   ),
                 ),
               ),
               tooltip: 'Setting Icon',
-              color: Color.fromRGBO(204, 88, 76, 1),
+              color: const Color.fromRGBO(204, 88, 76, 1),
               onPressed: () {},
             ), //Ic// onButton
             IconButton(
@@ -116,22 +127,24 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
                       borderRadius: BorderRadius.circular(10),
                       color:Theme.of(context).backgroundColor
                   ),
-                  child: Icon(Icons.menu)),
+                  child: const Icon(Icons.menu)),
               tooltip: 'Setting Icon',
-              color: Color.fromRGBO(204, 88, 76, 1),
+              color: const Color.fromRGBO(204, 88, 76, 1),
               onPressed:() => scaffoldKey.currentState!.openEndDrawer(),
             ), //Ic
 
           ], //<Widget>[]
         ),
-        endDrawer: Mydrawer(),
+        endDrawer: const Mydrawer(),
 
         floatingActionButton: FloatingActionButton(
           elevation: 10,
           child: Icon(Icons.add,
             color:Theme.of(context).floatingActionButtonTheme.focusColor,),
-          onPressed: () {  },
-          backgroundColor: Color.fromRGBO(204, 88, 76, 1)
+          onPressed: () {
+            Navigator.of(context).pushNamed(Add_post_screen.scid);
+          },
+          backgroundColor: const Color.fromRGBO(204, 88, 76, 1)
           //params
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -139,7 +152,7 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
           builder:(context,pr,ch)=> Container(
             color: Theme.of(context).backgroundColor,
             child: AnimatedBottomNavigationBar(
-              icons: [
+              icons: const [
                 Icons.home_outlined,
                 Icons.favorite_border,
                 Icons.contact_mail_outlined,
@@ -149,7 +162,7 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
               notchMargin: 10,
               
 
-              activeColor:Color.fromRGBO(204, 88, 76, 1),
+              activeColor:const Color.fromRGBO(204, 88, 76, 1),
               inactiveColor:Theme.of(context).iconTheme.color,
               activeIndex: pr.activenum,
               gapLocation: GapLocation.center,
@@ -161,20 +174,50 @@ class _Instrictor_home_screenState extends State<Instrictor_home_screen> {
             ),
           ),
         ),
-        body:Consumer<Prov_Check_connect>(
-          builder: (context,pr,ch)=>FutureBuilder(
-            future: pr.check_internet(),
-            builder: (context,snapshot)=> pr.net_connected==true?
-            Consumer<Login_signup_prov>(builder:(context,prov,ch)=>ins_screen_list[prov.activenum] ):Center(
-              child:Container(
-               decoration: BoxDecoration(
-                 image: DecorationImage(
-                   image: AssetImage(
-                     "assets/img/error.png",
-                   ),
-                   fit: BoxFit.contain
-                 )
-               ),
+        body:FutureBuilder(
+          builder:(context,snapshot)=>snapshot.connectionState==ConnectionState.waiting?Center(child: CircularProgressIndicator(),): Consumer<Prov_Check_connect>(
+            builder: (context,pr,ch)=>FutureBuilder(
+              future: pr.check_internet(),
+              builder: (context,snapshot)=> pr.net_connected==true?
+              RefreshIndicator(
+                child: Consumer<Login_signup_prov>(builder:(context,prov,ch)=>insScreenList[prov.activenum] ),
+                // Function that will be called when
+                // user pulls the ListView downward
+                onRefresh: () {
+                  return Future.delayed(
+                    Duration(seconds: 1),
+                        () {
+                      /// adding elements in list after [1 seconds] delay
+                      /// to mimic network call
+                      ///
+                      /// Remember: [setState] is necessary so that
+                      /// build method will run again otherwise
+                      /// list will not show all elements
+                      setState(() {
+
+                      });
+
+                      // showing snackbar
+                      _scaffoldKey.currentState!.showSnackBar(
+                        SnackBar(
+                          content: const Text('Page Refreshed'),
+                        ),
+                      );
+                    },
+                  );
+                },
+              )
+              /*Consumer<Login_signup_prov>(builder:(context,prov,ch)=>insScreenList[prov.activenum] )*/:Center(
+                child:Container(
+                 decoration: const BoxDecoration(
+                   image: DecorationImage(
+                     image: AssetImage(
+                       "assets/img/error.png",
+                     ),
+                     fit: BoxFit.contain
+                   )
+                 ),
+                ),
               ),
             ),
           ),

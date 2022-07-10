@@ -1,9 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
+import 'package:illuminate/Screens/Instructor/instructor_home_screen.dart';
 import 'package:illuminate/providers/Prov_addpost.dart';
 import 'package:illuminate/providers/Prov_profile.dart';
+import 'package:illuminate/providers/Shared_pref.dart';
+import 'package:illuminate/widgets/myalert.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../networks/get_data/Add_post.dart';
 class Add_post_screen extends StatefulWidget {
 
   static const scid="add_post";
@@ -15,6 +23,7 @@ class Add_post_screen extends StatefulWidget {
 }
 
 class _Add_post_screenState extends State<Add_post_screen> with SingleTickerProviderStateMixin {
+  final TextEditingController _posttxt=TextEditingController();
   IconData flicon=Icons.add;
   Animation<double> ? _animation;
   AnimationController?  _animationController;
@@ -24,7 +33,7 @@ class _Add_post_screenState extends State<Add_post_screen> with SingleTickerProv
 
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 260),
+      duration: const Duration(milliseconds: 260),
     );
 
     final curvedAnimation = CurvedAnimation(curve: Curves.easeInOut, parent: _animationController!);
@@ -43,8 +52,13 @@ class _Add_post_screenState extends State<Add_post_screen> with SingleTickerProv
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
-          onTap: (){
+          onTap: ()async{
+            await Provider.of<Prov_Add_post>(context,listen: false).add_new_post(Provider.of<Prov_Shared_Pref>(context,listen: false).teach_prof_data==null?"1":Provider.of<Prov_Shared_Pref>(context,listen: false).user_data!.user!.id.toString(), _posttxt.text,Provider.of<Prov_add_post>(context,listen: false).imgfile==null?File(""):File(Provider.of<Prov_add_post>(context,listen: false).imgfile!.path));
+
             Navigator.of(context).pop();
+
+           // await Provider.of<Prov_get_posts>(context,listen: false).addpost(2601, _posttxt.text);
+
           },
           child: Container(
             decoration: BoxDecoration(
@@ -161,17 +175,19 @@ class _Add_post_screenState extends State<Add_post_screen> with SingleTickerProv
           padding: EdgeInsets.symmetric(horizontal: width/40),
         child: Column(
           children: [
-            Container(
+            SizedBox(
 
               height: height/5,
               width: width,
               child: TextField(
+
+                controller:_posttxt ,
                 style: TextStyle(
                   fontSize: width/30
                 ),
                 textDirection: TextDirection.rtl,
                 textAlign: TextAlign.right,
-                decoration:InputDecoration(
+                decoration:const InputDecoration(
                   hintText: " ماذا يدور فى عقلك ؟",
                   hintStyle: TextStyle(
                   ),
@@ -189,7 +205,7 @@ class _Add_post_screenState extends State<Add_post_screen> with SingleTickerProv
                   builder:(context,pr,ch)=>pr.imgfile!=null? Container(
                     decoration: BoxDecoration(
                       color: Theme.of(context).backgroundColor,
-                      border: Border.all(color: Colors.black38,width: width/120),
+                      border: Border.all(color:Theme.of(context).unselectedWidgetColor,width: width/350),
                       borderRadius: BorderRadius.circular(width/20)
                     ),
 
@@ -217,8 +233,8 @@ class _Add_post_screenState extends State<Add_post_screen> with SingleTickerProv
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.location_on,color: Colors.white,),
-                      Text(pr.location.toString(),style:TextStyle(
+                      const Icon(Icons.location_on,color: Colors.white,),
+                      Text(pr.location.toString(),style:const TextStyle(
                         color: Colors.white
                       ))
                     ],
@@ -228,7 +244,7 @@ class _Add_post_screenState extends State<Add_post_screen> with SingleTickerProv
               )
               ):Container(),
               ),
-            Expanded(
+            const Expanded(
               child: SizedBox(
 
               ),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:illuminate/widgets/drawer.dart';
-import 'package:auto_animated/auto_animated.dart';
-import '../../refrence.dart';
 import '../../widgets/Requestlist.dart';
 class Req_list extends StatefulWidget {
   static const scid="req_list";
@@ -27,7 +24,7 @@ class _Req_list extends State<Req_list> {
       backgroundColor: Colors.white.withOpacity(.95),
 
       key: scaffoldKey,
-      endDrawer: Mydrawer(),
+      endDrawer: const Mydrawer(),
       appBar: AppBar(
         backgroundColor: Colors.orange[100],
         leading: Container(
@@ -36,7 +33,7 @@ class _Req_list extends State<Req_list> {
             alignment: Alignment.center,
             children: [
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color:Color.fromRGBO(204, 88, 76, 1),
                     shape: BoxShape.circle
                 ),
@@ -44,8 +41,8 @@ class _Req_list extends State<Req_list> {
                 width: width/10.3,
 
               ),
-              Container(
-                child: CircleAvatar(
+              SizedBox(
+                child: const CircleAvatar(
                   backgroundImage: AssetImage('assets/img/tantawy.jpg'),
                 ),
                 height: height/10.1,
@@ -66,9 +63,9 @@ class _Req_list extends State<Req_list> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white
                 ),
-                child: Icon(Icons.settings)),
+                child: const Icon(Icons.settings)),
             tooltip: 'Setting Icon',
-            color: Color.fromRGBO(204, 88, 76, 1),
+            color: const Color.fromRGBO(204, 88, 76, 1),
             onPressed: () {},
           ), //Ic// onButton
           IconButton(
@@ -79,16 +76,16 @@ class _Req_list extends State<Req_list> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white
                 ),
-                child: Icon(Icons.menu)),
+                child: const Icon(Icons.menu)),
             tooltip: 'Setting Icon',
-            color: Color.fromRGBO(204, 88, 76, 1),
+            color: const Color.fromRGBO(204, 88, 76, 1),
             onPressed:() => scaffoldKey.currentState!.openEndDrawer(),
           ), //Ic
 
         ], //<Widget>[]
       ),
 
-      body:Reqlist(),
+      body:const Reqlist(),
 
     );
   }

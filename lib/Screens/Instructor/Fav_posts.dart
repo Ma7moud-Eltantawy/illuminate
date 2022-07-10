@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:illuminate/Screens/Instructor/My_posts.dart';
+import 'package:provider/provider.dart';
+
+import '../../networks/get_data/get_posts.dart';
+import '../../providers/Shared_pref.dart';
+
 class Fav_List_Screen extends StatefulWidget {
   const Fav_List_Screen({Key? key}) : super(key: key);
 
@@ -11,8 +17,10 @@ class _Fav_List_ScreenState extends State<Fav_List_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Center(
-        child:Text("Fav_Screen"),
+      body:  SingleChildScrollView(
+        child:  My_post(
+          Posts: Provider.of<Prov_get_posts>(context,listen: false).Likes_posts(Provider.of<Prov_Shared_Pref>(context,listen:false).teach_prof_data!.data!.profile!.id!.toInt()),
+        ),
       ),
     );
   }

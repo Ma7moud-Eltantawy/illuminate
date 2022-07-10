@@ -1,35 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:illuminate/Screens/student/stu_home_screen.dart';
-import 'package:illuminate/Screens/Login.dart';
 import 'package:illuminate/providers/Prov_location.dart';
-import 'package:illuminate/providers/Prov_login_signup.dart';
 import 'package:provider/provider.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../providers/Prov_profile.dart';
-import 'Instructor/instructor_home_screen.dart';
 class Loc_Screen extends StatefulWidget {
+
   static const scid="loc";
-  const Loc_Screen({Key? key}) : super(key: key);
+  Widget submit;
+  Loc_Screen({Key? key,required this.submit}) : super(key: key);
 
   @override
   _Loc_ScreenState createState() => _Loc_ScreenState();
 }
 
 class _Loc_ScreenState extends State<Loc_Screen> {
-
-
   late String searchAdd;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
 
@@ -55,59 +45,9 @@ class _Loc_ScreenState extends State<Loc_Screen> {
                   height: height,
                   width: width,
                   color: Colors.white,
-                  child: Center(child: CircularProgressIndicator())),
+                  child: const Center(child: CircularProgressIndicator())),
             ),
-            Positioned(
-              top: height/2200,
-              right: width/800,
-              child: GestureDetector(
-                onTap: (){
-                  var pro=Provider.of<Prov_profile_page>(context,listen: false);
-                  pro.Address=  "${Provider.of<Prov_loc>(context,listen: false).address}";
-                  Provider.of<Prov_loc>(context,listen: false).markers.isEmpty?
-                  Alert(
-                    context: context,
-                    type: AlertType.warning,
-                    title: "!انتبه",
-                    desc: "..يجب تحديد موقعك",
-                    buttons: [
-                      DialogButton(
-                        child: Text(
-                          "تسجيل دخول",
-                          style: TextStyle(color: Colors.white, fontSize: width/30),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(Login_Screen.scid);
-                        },
-                        color: Color.fromRGBO(0, 179, 134, 1.0),
-                      ),
-                      DialogButton(
-                        child: Text(
-                          "محاوله مره اخرى",
-                          style: TextStyle(color: Colors.white, fontSize: width/30),
-                        ),
-                        onPressed: () => Navigator.pop(context),
-                        gradient: LinearGradient(colors: [
-                          Color.fromRGBO(116, 116, 191, 1.0),
-                          Color.fromRGBO(52, 138, 199, 1.0)
-                        ]),
-                      )
-                    ],
-                  ).show(): Provider.of<Login_signup_prov>(context,listen: false).usertype=="learner"?Navigator.of(context).pushNamed(Home_screen.scid):Navigator.of(context).pushNamed(Instrictor_home_screen.scid);
-
-                },
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100.0)),
-                  elevation: 5,
-
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.navigate_next,size: 20,),
-                  ),
-                ),
-              ),
-            ),
+     widget.submit,
 
             Positioned(
                 bottom: height/23,
@@ -120,7 +60,7 @@ class _Loc_ScreenState extends State<Loc_Screen> {
                     backgroundColor:MaterialStateProperty.all(Colors.red),
                   ),
                   child: RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                         children: [
                           WidgetSpan(child:  Icon(Icons.my_location_outlined, size: 16)),
 
@@ -157,7 +97,7 @@ class _Loc_ScreenState extends State<Loc_Screen> {
                     textAlign: TextAlign.right,
                     decoration: InputDecoration(
                       icon:IconButton(
-                        icon: Icon(Icons.search),
+                        icon: const Icon(Icons.search),
                         onPressed: (){
                           Provider.of<Prov_loc>(context,listen: false).searchnavigate(searchAdd);
                         },

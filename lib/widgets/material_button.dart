@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 class Mbutton extends StatelessWidget {
-  Mbutton({
+  const Mbutton({
 
 required this.width,required this.height,required this.colors,required this.txt,
   required this.wid,required this.func,
@@ -48,7 +48,7 @@ required this.width,required this.height,required this.colors,required this.txt,
                       fontWeight: FontWeight.bold
                   ),),
 
-                  SizedBox(width: 20,),
+                  const SizedBox(width: 20,),
 
                   Container(
                     height: height!/100,

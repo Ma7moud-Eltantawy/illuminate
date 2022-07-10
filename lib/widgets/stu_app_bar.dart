@@ -13,7 +13,7 @@ class Stu_app_bar{
           alignment: Alignment.center,
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color:Color.fromRGBO(204, 88, 76, 1),
                   shape: BoxShape.circle
               ),
@@ -21,8 +21,8 @@ class Stu_app_bar{
               width: width/10.3,
 
             ),
-            Container(
-              child: CircleAvatar(
+            SizedBox(
+              child: const CircleAvatar(
                 backgroundImage: AssetImage('assets/img/tantawy.jpg'),
               ),
               height: height/10.1,
@@ -43,9 +43,9 @@ class Stu_app_bar{
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white
               ),
-              child: Icon(Icons.settings)),
+              child: const Icon(Icons.settings)),
           tooltip: 'Setting Icon',
-          color: Color.fromRGBO(204, 88, 76, 1),
+          color: const Color.fromRGBO(204, 88, 76, 1),
           onPressed: () {},
         ), //Ic// onButton
         IconButton(
@@ -56,9 +56,9 @@ class Stu_app_bar{
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white
               ),
-              child: Icon(Icons.menu)),
+              child: const Icon(Icons.menu)),
           tooltip: 'Setting Icon',
-          color: Color.fromRGBO(204, 88, 76, 1),
+          color: const Color.fromRGBO(204, 88, 76, 1),
           onPressed: onpress(),
         ), //Ic
 

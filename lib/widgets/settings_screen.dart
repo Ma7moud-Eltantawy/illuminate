@@ -20,7 +20,7 @@ class _Settings_screenState extends State<Settings_screen> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text("الاعدادات"),
+        title: const Text("الاعدادات"),
         centerTitle: true,
         titleTextStyle: Theme.of(context).textTheme.subtitle1!.copyWith(
           fontSize: width/20
@@ -38,7 +38,7 @@ class _Settings_screenState extends State<Settings_screen> {
                 },
               ),
             ),
-            title:Text("الوضع الداكن",textDirection: TextDirection.rtl,textAlign:TextAlign.right,) ,
+            title:const Text("الوضع الداكن",textDirection: TextDirection.rtl,textAlign:TextAlign.right,) ,
           ),
         ],
       ),

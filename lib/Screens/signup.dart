@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:illuminate/Screens/Login.dart';
+import 'package:illuminate/Screens/more_information.dart';
+import 'package:illuminate/main.dart';
 import 'package:illuminate/providers/Prov_profile.dart';
+import 'package:illuminate/providers/Shared_pref.dart';
 import 'package:provider/provider.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../providers/Prov_login_signup.dart';
 import '../widgets/Textformfield.dart';
 import '../widgets/material_button.dart';
-import 'map_location.dart';
+import '../widgets/myalert.dart';
 class Signup_Screen extends StatefulWidget {
   static const scid="signup";
   const Signup_Screen({Key? key}) : super(key: key);
@@ -39,7 +41,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
             children:[
             Container(
                 alignment: Alignment.centerRight,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('assets/img/back.png'),
                       opacity: 0.5,
@@ -54,7 +56,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                     Text("ILLUMINATE",style: TextStyle(
                         fontSize: height/20,
                         fontWeight: FontWeight.w900,
-                        color: Color.fromRGBO(204, 88, 76, 1)
+                        color: const Color.fromRGBO(204, 88, 76, 1)
                     ),)
                   ],
                 )
@@ -65,7 +67,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                 margin: EdgeInsets.symmetric(horizontal: width/25,vertical: height/60),
                 child: Column(
                   children: [
-                    txt(text: "الاسم",),
+                    const txt(text: "الاسم",),
                     Opacity(
                       opacity: .8,
 
@@ -78,7 +80,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                       ),
 
                     ),
-                    txt(text: "العمر",),
+                    const txt(text: "العمر",),
                     Opacity(
                       opacity: .8,
 
@@ -90,7 +92,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                       ),
 
                     ),
-                    txt(text: "البريد الالكترونى",),
+                    const txt(text: "البريد الالكترونى",),
                     Opacity(
                       opacity: .8,
 
@@ -104,7 +106,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
 
                     ),
 
-                    txt(text: "كلمة المرور",),
+                    const txt(text: "كلمة المرور",),
                     Opacity(
                       opacity: .8,
                       child: Consumer<Login_signup_prov>(
@@ -118,26 +120,26 @@ class _Signup_ScreenState extends State<Signup_Screen> {
 
                             keyboardType: TextInputType.visiblePassword,
                             obscureText: prov.showdata,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Color.fromRGBO(204, 88, 76, 1)
                             ),
                             decoration: InputDecoration(
                               errorText: pr.supassmsg,
                               prefixIcon: IconButton(onPressed: () {
                                 prov.changeshow(prov.showdata);
-                              }, icon:prov.showdata==true? Icon(Icons.visibility_off_sharp):Icon(Icons.visibility_sharp),
+                              }, icon:prov.showdata==true? const Icon(Icons.visibility_off_sharp):const Icon(Icons.visibility_sharp),
 
 
 
                               ),
                               hintText: 'الرجاء ادخال كلمة المرور',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   fontSize: 12,
                                   color: Color.fromRGBO(204, 88, 76, 1)
 
                               ),
 
-                              errorStyle: TextStyle(
+                              errorStyle: const TextStyle(
 
                               ),
 
@@ -167,7 +169,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                               child: Card(
                                 child: Container(
 
-                                  color:prov.usertype=="teacher"? Color.fromRGBO(52, 138, 199, 1.0): Color.fromRGBO(59, 199, 221, 1.0),
+                                  color:prov.usertype=="teacher"? const Color.fromRGBO(52, 138, 199, 1.0): const Color.fromRGBO(59, 199, 221, 1.0),
                                   height: height/20,
                                   width: width/2.75,
                                   child: Center(
@@ -192,7 +194,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                               },
                               child: Card(
                                 child: Container(
-                                  color: Provider.of<Login_signup_prov>(context,listen: false).usertype=="learner"?Color.fromRGBO(52, 138, 199, 1.0): Color.fromRGBO(59, 199, 221, 1.0),
+                                  color: Provider.of<Login_signup_prov>(context,listen: false).usertype=="learner"?const Color.fromRGBO(52, 138, 199, 1.0): const Color.fromRGBO(59, 199, 221, 1.0),
                                   height: height/20,
                                   width: width/2.75,
                                   child: Center(
@@ -222,24 +224,35 @@ class _Signup_ScreenState extends State<Signup_Screen> {
               Mbutton(width: width, height: height,
 
                   func: ()async{
-                   await pr.validateuser(_name!.text, _age!.text, _user!.text, _pass!.text);
-                if(pr.sunamemsg==""&&pr.sunagemsg==""&&pr.suemailmsg==""&&pr.supassmsg=="" && pr.usertype!="")
+                try
+                {
+
+                  await pr.validateuser(_name!.text, _age!.text, _user!.text, _pass!.text);
+                  if(pr.sunamemsg==""&&pr.sunagemsg==""&&pr.suemailmsg==""&&pr.supassmsg=="" && pr.usertype!="")
                   {
-                    Navigator.of(context).pushNamed(Loc_Screen.scid);
-                  }
-                else if(pr.usertype=="")
-                  {
-                    
-                  }
-                var pro=Provider.of<Prov_profile_page>(context,listen: false);
-                pro.Username=_name!.text;
-                pro.email=_user!.text;
-                pro.Password=_pass!.text;
-                pro.Age=_age!.text;
+                    print(user_taken);
+                        Navigator.of(context).pushNamed( more_informtion_Screen.scid);
 
 
                   }
-                  ,colors: [
+
+                  var pro=Provider.of<Prov_profile_page>(context,listen: false);
+                  pro.Username=_name!.text;
+                  pro.email=_user!.text;
+                  pro.Password=_pass!.text;
+                  pro.Age=_age!.text;
+
+
+
+                }
+                catch(e){
+                  print(e);
+
+                }
+
+
+                  }
+                  ,colors: const [
                 Color.fromRGBO(59, 199, 221, 1.0),
                 Color.fromRGBO(59, 199, 221, 1.0),
                 Color.fromRGBO(52, 138, 199, 1.0),
@@ -268,7 +281,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                         },
                         child: Text("تسجيل دخول",style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 14,
-                            color:  Color.fromRGBO(59, 199, 221, 1.0),
+                            color:  const Color.fromRGBO(59, 199, 221, 1.0),
                             fontFamily: 'cairo',
                             fontWeight: FontWeight.w600
                         )
@@ -288,7 +301,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
 }
 
 class txt extends StatelessWidget {
-txt({
+const txt({
   required this.text
 });
 final String? text;

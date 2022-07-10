@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 class txtformfield extends StatelessWidget {
-  txtformfield(
+  const txtformfield(
       {
         required this.controller,
         required this.width,

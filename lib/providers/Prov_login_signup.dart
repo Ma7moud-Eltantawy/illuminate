@@ -1,5 +1,5 @@
+
 import 'package:flutter/cupertino.dart';
-import 'package:illuminate/providers/Check_connected.dart';
 
 class Login_signup_prov with ChangeNotifier{
   String usertype="";
@@ -11,6 +11,8 @@ class Login_signup_prov with ChangeNotifier{
   String sunage="";
   String suemail="";
   String supass="";
+  String  phone="";
+  String college="";
   int activenum=0;
   void chahnge_active(int index)
   {
@@ -83,6 +85,13 @@ class Login_signup_prov with ChangeNotifier{
         supass=pass;
       }
     notifyListeners();
+  }
+  void morsinformation(String ph,String coll)
+  {
+    phone=ph;
+    college=coll;
+    notifyListeners();
+
   }
 
 }
