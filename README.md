@@ -9,4 +9,4 @@ The phone has become a part of personal life and has many applications that faci
 ## Diagrams
 
 
-![image](https://user-images.githubusercontent.com/61250075/187110151-486f2351-1572-4f9e-bbe2-59203aafd0c1.png)
+![Picture2](https://user-images.githubusercontent.com/61250075/187110373-77cb2b0a-4e12-4c04-81bc-2677370e4488.png)
