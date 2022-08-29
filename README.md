@@ -12,3 +12,7 @@ The phone has become a part of personal life and has many applications that faci
 
 
 ![Picture2](https://user-images.githubusercontent.com/61250075/187110373-77cb2b0a-4e12-4c04-81bc-2677370e4488.png)
+
+![Picture3](https://user-images.githubusercontent.com/61250075/187110584-ce007152-4624-41ba-8cf2-f7f7696cb53f.png)
+
+![image](https://user-images.githubusercontent.com/61250075/187110620-844f72ff-cd1e-4563-bd95-1e0a7983a043.png)
