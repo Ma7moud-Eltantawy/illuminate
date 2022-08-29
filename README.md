@@ -1,9 +1,8 @@
 # illuminate
 
-A new Flutter project.
+Educational application to help and teach illiterate people.
 
-## about application
-
+## About application
 The phone has become a part of personal life and has many applications that facilitate our life.Therefore, we want to use the phone to facilitatepeople's lives and solve their problems.So We Have create Our application To help More people To achieve their goals , and improve the education process and deliver it to people in need
 
 ## Diagrams
@@ -23,3 +22,9 @@ The phone has become a part of personal life and has many applications that faci
 - database schema
 
 ![Picture5](https://user-images.githubusercontent.com/61250075/187111022-17509b2b-3b4d-4620-87e4-9f8fedd2bf78.png)
+
+
+## screen shots from app
+
+![3](https://user-images.githubusercontent.com/61250075/187111432-153fc817-4403-4139-8f1a-09e5c51a3855.png)
+![behance – 2](https://user-images.githubusercontent.com/61250075/187111467-1707ab42-20c3-4db7-926b-d2f89986c105.png)
